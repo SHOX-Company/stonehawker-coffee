@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stonehawker Coffee — Volcanically Organic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+:root {
+  --espresso:      oklch(7%  0.022 35);
+  --espresso-mid:  oklch(12% 0.028 35);
+  --espresso-lift: oklch(16% 0.030 38);
+  --cream:         oklch(93% 0.014 80);
+  --cream-dim:     oklch(72% 0.013 78);
+  --gold:          oklch(68% 0.14  70);
+  --gold-dim:      oklch(54% 0.10  70);
+  --volcanic-light:oklch(60% 0.13 145);
+  --ash:           oklch(32% 0.03  80);
+  /* Textile colors */
+  --t-pink:   #E0187A;
+  --t-teal:   #1A9AB8;
+  --t-blue:   #1A38C0;
+  --t-lime:   #7CC800;
+  --t-amber:  #C88010;
+  --t-orange: #D85A18;
+  --t-red:    #C41820;
+  --t-cyan:   #00B4C8;
+  /* Roast accents */
+  --lago-accent:    #D48A20;
+  --quetzal-accent: #B01888;
+  --xocomil-accent: #8A8080;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--espresso); color: var(--cream); font-family: var(--sans); overflow-x: hidden; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 3rem;
+  background: linear-gradient(to bottom, rgba(8,4,2,0.95), transparent);
+  transition: backdrop-filter .4s, background .4s;
+}
+nav.scrolled { background: rgba(8,4,2,0.97); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(200,128,16,0.15); }
+.nav-logo { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; letter-spacing: .1em; color: var(--cream); text-decoration: none; }
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color .3s; }
+.nav-links a:hover { color: var(--gold); }
+.nav-cta { background: var(--gold); color: var(--espresso); border: none; padding: .65rem 1.6rem; font-family: var(--sans); font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: all .3s; }
+.nav-cta:hover { background: var(--cream); }
+
+/* ── CHEVRON DIVIDER ── */
+.chevron-divider { width: 100%; height: 36px; display: block; overflow: visible; }
+
+/* ────────────────────────────────────────────
+   HERO — mobile-first portrait video
+   ──────────────────────────────────────────── */
+
+#hero {
+  position: relative;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  background: var(--espresso);
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* Video — portrait, fills mobile screen naturally */
+.hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+}
+
+/* Three.js particle canvas overlay */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.45;
+  mix-blend-mode: screen;
+}
+
+/* Cinematic overlays */
+.hero-overlay-top {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, rgba(5,2,1,.75) 0%, rgba(5,2,1,.2) 60%, transparent 100%);
+  z-index: 1;
+}
+.hero-overlay-gradient {
+  position: absolute; inset: 0;
+  /* Two-layer gradient: left dark panel (text zone) + bottom scrim (CTA zone) */
+  background:
+    linear-gradient(to right,  rgba(5,2,1,.72) 0%, rgba(5,2,1,.38) 52%, transparent 70%),
+    linear-gradient(to top,    rgba(5,2,1,.97) 0%, rgba(5,2,1,.82) 22%, rgba(5,2,1,.45) 42%, rgba(5,2,1,.12) 62%, rgba(5,2,1,.04) 80%, transparent 100%);
+  z-index: 1;
+}
+.hero-overlay-vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 100% 90% at 50% 50%, transparent 45%, rgba(5,2,1,.5) 100%);
+  z-index: 1;
+}
+
+/* Content — full-height flex column: copy top, CTAs bottom */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 62vw;
+  padding: 0 1.4rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+/* Copy block — headline sits in upper safe zone */
+.hero-copy {
+  padding-top: clamp(5rem, 16vw, 7.5rem);
+}
+/* CTA zone — buttons anchored above mobile sticky bar */
+.hero-cta-zone {
+  padding-bottom: 5.5rem;
+}
+
+.hero-eyebrow {
+  font-size: .6rem;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--t-amber);
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 10vw, 5.5rem);
+  font-weight: 300;
+  line-height: .96;
+  letter-spacing: -.015em;
+  margin-bottom: 1.1rem;
+  opacity: 0;
+  transform: translateY(36px);
+  text-shadow: 0 2px 24px rgba(0,0,0,.6);
+}
+.hero-title em  { color: var(--t-pink); font-style: italic; }
+.hero-title .vol { color: var(--t-teal); }
+
+.hero-sub {
+  font-size: .92rem;
+  font-weight: 300;
+  color: rgba(237,225,208,.78);
+  max-width: 340px;
+  margin: .9rem 0 0;
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(18px);
+  text-shadow: 0 1px 10px rgba(0,0,0,.7);
+}
+
+.hero-actions {
+  display: flex;
+  gap: .65rem;
+  flex-wrap: nowrap;
+  opacity: 0;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  background: var(--gold);
+  color: var(--espresso);
+  border: none;
+  padding: 1rem 1.8rem;
+  font-family: var(--sans);
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .35s;
+  min-height: 52px;
+  white-space: nowrap;
+}
+.btn-primary:hover { background: var(--cream); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(200,128,16,.45); }
+
+.btn-ghost {
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--cream);
+  border: 1px solid rgba(245,237,224,.28);
+  padding: 1rem 1.4rem;
+  font-family: var(--sans);
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .35s;
+  min-height: 52px;
+  white-space: nowrap;
+}
+.btn-ghost:hover { border-color: var(--t-teal); color: var(--t-teal); background: rgba(26,154,184,.1); }
+
+/* ── Trust bar ── */
+.hero-trust {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  flex-wrap: wrap;
+  margin-top: 1.4rem;
+  opacity: 0;
+}
+.hero-trust-item { font-size: .58rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(200,176,140,.6); }
+.hero-trust-sep  { width: 3px; height: 3px; border-radius: 50%; background: rgba(200,176,140,.3); flex-shrink: 0; }
+
+/* ── Scroll hint ── */
+.scroll-hint {
+  position: absolute;
+  bottom: 1.8rem;
+  right: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .4rem;
+  font-size: .55rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(200,176,140,.45);
+  z-index: 3;
+  animation: bounce 2.4s ease-in-out infinite;
+}
+.scroll-hint::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, var(--t-amber), transparent);
+}
+@keyframes bounce {
+  0%,100%{ transform: translateY(0); }
+  50%    { transform: translateY(6px); }
+}
+
+/* ────────────────────────────────────────────
+   HERO — desktop override: editorial portrait split
+   ──────────────────────────────────────────── */
+@media (min-width: 901px) {
+
+  #hero {
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .hero-video-wrap {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    left: auto;
+    width: calc(100svh * 9 / 16);
+    max-width: 52%;
+    min-width: 360px;
+  }
+  .hero-video-wrap video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .hero-overlay-gradient {
+    /* Desktop: pure lateral gradient — left panel is solid dark, right fades into video */
+    background: linear-gradient(
+      to right,
+      rgba(5,2,1,1)   0%,
+      rgba(5,2,1,.97) 30%,
+      rgba(5,2,1,.72) 50%,
+      rgba(5,2,1,.2)  66%,
+      transparent     80%
+    );
+  }
+  .hero-overlay-vignette { background: none; }
+  .hero-overlay-top { height: 180px; }
+
+  #hero::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    right: calc(100svh * 9 / 16);
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(200,128,16,.18) 30%, rgba(200,128,16,.22) 70%, transparent);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    text-align: left;
+    /* Fill the full dark left panel — match video panel width exactly */
+    width: calc(100% - clamp(360px, calc(100svh * 9 / 16), 52%));
+    max-width: none;
+    padding: 0 clamp(2rem, 4vw, 5rem) 0 clamp(3rem, 6vw, 8rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hero-copy {
+    padding-top: clamp(5rem, 12vh, 9rem);
+  }
+  .hero-cta-zone {
+    padding-bottom: 4rem;
+  }
+
+  .hero-title { font-size: clamp(3.2rem, 4.8vw, 6rem); }
+
+  .hero-sub {
+    font-size: 1rem;
+    max-width: 460px;
+    margin-bottom: 2.2rem;
+  }
+
+  .hero-actions { gap: .8rem; }
+
+  /* Desktop bag: grounded in right video panel */
+  .hero-product {
+    width: min(22vw, 310px);
+    right: 5%;
+    bottom: 0;
+  }
+
+  .scroll-hint {
+    bottom: 2rem;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounceCenter 2.4s ease-in-out infinite;
+  }
+  @keyframes bounceCenter {
+    0%,100%{ transform: translateX(-50%) translateY(0); }
+    50%    { transform: translateX(-50%) translateY(6px); }
+  }
+}
+
+/* ── HERO PRODUCT BAG — grounded on table, no float ── */
+.hero-product {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 0;
+  width: 48vw;
+  max-width: 240px;
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: bottom center;
+  filter:
+    drop-shadow(0 28px 52px rgba(0,0,0,.84))
+    drop-shadow(0 6px 16px rgba(0,0,0,.62))
+    drop-shadow(0 0 56px rgba(200,128,16,.13));
+}
+
+.hero-product.is-visible {
+  animation: bag-entrance 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-product img { width: 100%; height: auto; display: block; }
+
+@keyframes bag-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(48px) perspective(700px) rotateY(-6deg) rotateX(5deg) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) perspective(700px) rotateY(-11deg) rotateX(2deg) scale(1);
+  }
+}
+
+/* ── MOBILE STICKY CTA ── */
+.mobile-cta-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: var(--espresso); border-top: 1px solid rgba(200,128,16,.2); padding: .9rem 1.2rem; backdrop-filter: blur(16px); }
+.mobile-cta-inner { display: flex; gap: .6rem; align-items: center; }
+.mobile-cta-bar .btn-primary { flex: 1; padding: .85rem 1rem; font-size: .78rem; letter-spacing: .12em; min-height: 48px; }
+.mobile-cta-bar .btn-ghost { padding: .85rem 1rem; font-size: .78rem; letter-spacing: .1em; min-height: 48px; white-space: nowrap; }
+/* Hamburger */
+.nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: .4rem; flex-direction: column; gap: 5px; }
+.nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--cream); transition: all .3s; }
+.nav-mobile-menu { display: none; position: fixed; inset: 0; background: rgba(5,2,1,.97); z-index: 150; flex-direction: column; align-items: center; justify-content: center; gap: 2.4rem; }
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-menu a { font-family: var(--serif); font-size: 2.2rem; font-weight: 300; color: var(--cream); text-decoration: none; letter-spacing: .06em; }
+.nav-mobile-menu a:hover { color: var(--gold); }
+.nav-mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--cream); font-size: 1.4rem; cursor: pointer; padding: .5rem; }
+
+/* ── INTERRUPT ── */
+#interrupt { position: relative; padding: 8rem 3rem; overflow: hidden; background: var(--espresso); }
+.interrupt-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.interrupt-label { font-size: .68rem; letter-spacing: .32em; text-transform: uppercase; color: var(--t-orange); margin-bottom: 1.2rem; }
+.interrupt-headline { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 300; line-height: 1.1; }
+.interrupt-headline strong { display: block; font-style: italic; color: var(--t-pink); font-weight: 300; }
+.interrupt-body p { font-size: 1.05rem; font-weight: 300; color: var(--cream-dim); line-height: 1.82; }
+.interrupt-body p + p { margin-top: 1.2rem; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 2.8rem; }
+.stat-box { background: var(--espresso-mid); border: 1px solid rgba(200,128,16,.1); padding: 1.8rem 1.4rem; }
+.stat-num { font-family: var(--serif); font-size: 3rem; font-weight: 300; color: var(--gold); line-height: 1; margin-bottom: .4rem; }
+.stat-label { font-size: .7rem; letter-spacing: .1em; color: var(--cream-dim); text-transform: uppercase; }
+
+/* ── ORIGIN ── */
+#origin { padding: 9rem 3rem; background: linear-gradient(180deg, var(--espresso) 0%, oklch(10% 0.04 145) 55%, var(--espresso) 100%); }
+.origin-inner { max-width: 1100px; margin: 0 auto; }
+.section-label { font-size: .66rem; letter-spacing: .36em; text-transform: uppercase; color: var(--volcanic-light); margin-bottom: 1rem; }
+.section-title { font-family: var(--serif); font-size: clamp(2.6rem, 5vw, 4.4rem); font-weight: 300; line-height: 1.08; margin-bottom: 1rem; }
+.origin-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 4rem; }
+.volcano-scene { width: 100%; aspect-ratio: 4/3; background: var(--espresso-mid); border: 1px solid rgba(200,128,16,.1); overflow: hidden; position: relative; }
+.volcano-svg { width: 100%; height: 100%; }
+.origin-caption { margin-top: .9rem; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--volcanic-light); text-align: center; }
+.origin-text p { font-size: 1.05rem; font-weight: 300; color: var(--cream-dim); line-height: 1.85; margin-bottom: 1.3rem; }
+.badges { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 2rem; }
+.badge { padding: .4rem .9rem; border: 1px solid rgba(200,128,16,.28); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+
+/* ── VOLCANIC ── */
+#volcanic { padding: 8rem 3rem; background: var(--espresso); }
+.volcanic-inner { max-width: 1100px; margin: 0 auto; }
+.volcanic-header { text-align: center; max-width: 720px; margin: 0 auto 4.5rem; }
+.volcanic-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.pillar { border-left: 2px solid var(--gold); padding: 1.6rem 1.6rem; background: linear-gradient(135deg, var(--espresso-mid), transparent); }
+.pillar-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; margin-bottom: .7rem; }
+.pillar-body { font-size: .88rem; font-weight: 300; color: var(--cream-dim); line-height: 1.75; }
+
+/* ── ROASTS ── */
+#roasts { padding: 8rem 3rem; background: oklch(9% 0.022 35); }
+.roasts-inner { max-width: 1260px; margin: 0 auto; }
+.roasts-header { text-align: center; margin-bottom: 5rem; }
+.roasts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.roast-card { position: relative; background: var(--espresso-mid); border: 1px solid rgba(255,255,255,.06); transition: transform .5s cubic-bezier(.25,.46,.45,.94), border-color .4s; cursor: default; }
+.roast-card:hover { transform: translateY(-10px); }
+.roast-card.lago:hover     { border-color: rgba(212,138,32,.4); }
+.roast-card.quetzal:hover  { border-color: rgba(176,24,136,.4); }
+.roast-card.xocomil:hover  { border-color: rgba(138,128,128,.4); }
+.roast-inner { padding: 2.2rem 2rem 2.4rem; display: flex; flex-direction: column; }
+.bag-canvas-wrap { margin: 0 auto 1.8rem; width: 200px; height: 290px; }
+.bag-canvas-wrap canvas { width: 100%; height: 100%; display: block; transition: transform .6s ease; }
+.roast-card:hover canvas { transform: rotateY(14deg) rotateX(-5deg) scale(1.05); }
+.roast-name { font-family: var(--serif); font-size: 2rem; font-weight: 300; text-align: center; margin-bottom: .2rem; }
+.roast-card.lago .roast-name     { color: var(--lago-accent); }
+.roast-card.quetzal .roast-name  { color: var(--quetzal-accent); }
+.roast-card.xocomil .roast-name  { color: var(--xocomil-accent); }
+.roast-sub { font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--cream-dim); text-align: center; margin-bottom: 1.4rem; }
+.roast-desc { font-size: .9rem; font-weight: 300; color: var(--cream-dim); line-height: 1.72; text-align: center; margin-bottom: 1.4rem; flex: 1; }
+.taste-tags { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; margin-bottom: 1.6rem; }
+.tag { font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; padding: .22rem .7rem; border: 1px solid; }
+.roast-card.lago .tag     { border-color: rgba(212,138,32,.35); color: var(--lago-accent); }
+.roast-card.quetzal .tag  { border-color: rgba(176,24,136,.35); color: var(--quetzal-accent); }
+.roast-card.xocomil .tag  { border-color: rgba(138,128,128,.35); color: var(--xocomil-accent); }
+
+/* Size selector */
+.size-selector { display: flex; gap: 2px; margin-bottom: 1.4rem; }
+.size-btn { flex: 1; background: transparent; border: 1px solid rgba(255,255,255,.14); color: var(--cream-dim); padding: .5rem .5rem; font-family: var(--sans); font-size: .72rem; letter-spacing: .08em; cursor: pointer; transition: all .25s; display: flex; flex-direction: column; align-items: center; gap: .1rem; }
+.size-btn span.sz { font-size: .62rem; text-transform: uppercase; letter-spacing: .1em; }
+.size-btn span.pr { font-family: var(--serif); font-size: 1rem; font-weight: 600; }
+.roast-card.lago .size-btn.active     { background: rgba(212,138,32,.15); border-color: var(--lago-accent); color: var(--lago-accent); }
+.roast-card.quetzal .size-btn.active  { background: rgba(176,24,136,.15); border-color: var(--quetzal-accent); color: var(--quetzal-accent); }
+.roast-card.xocomil .size-btn.active  { background: rgba(138,128,128,.15); border-color: var(--xocomil-accent); color: var(--xocomil-accent); }
+.roast-price { text-align: center; margin-bottom: 1.2rem; font-family: var(--serif); font-size: 1.6rem; font-weight: 300; }
+.roast-price-num { color: var(--gold); }
+.size-label { font-size: .75rem; color: var(--cream-dim); }
+.btn-add { width: 100%; background: transparent; border: 1px solid rgba(245,237,224,.18); color: var(--cream); padding: .9rem; font-family: var(--sans); font-size: .75rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; cursor: pointer; transition: all .35s; }
+.roast-card.lago .btn-add:hover     { background: var(--lago-accent); border-color: var(--lago-accent); color: var(--espresso); }
+.roast-card.quetzal .btn-add:hover  { background: var(--quetzal-accent); border-color: var(--quetzal-accent); color: var(--cream); }
+.roast-card.xocomil .btn-add:hover  { background: var(--xocomil-accent); border-color: var(--xocomil-accent); color: var(--espresso); }
+.roast-process { font-size: .63rem; letter-spacing: .08em; color: var(--ash); text-align: center; margin-top: .9rem; }
+.roast-date { font-size: .62rem; letter-spacing: .08em; color: var(--ash); text-align: center; margin-top: .2rem; }
+
+/* ── FARMERS ── */
+#farmers { padding: 9rem 3rem; background: oklch(10% 0.04 145); }
+.farmers-inner { max-width: 1100px; margin: 0 auto; }
+.farmers-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 4rem; }
+.farmers-visual { aspect-ratio: 4/5; background: var(--espresso-mid); border: 1px solid rgba(200,128,16,.1); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.ph-inner { display: flex; flex-direction: column; align-items: center; gap: .6rem; padding: 2rem; }
+.ph-line { height: 1px; background: repeating-linear-gradient(90deg, rgba(200,128,16,.14) 0, rgba(200,128,16,.14) 4px, transparent 4px, transparent 8px); margin-bottom: 5px; }
+.ph-label { font-family: 'Courier New', monospace; font-size: .58rem; color: rgba(200,128,16,.38); text-align: center; letter-spacing: .1em; text-transform: uppercase; margin-top: .5rem; }
+.farmers-text p { font-size: 1.05rem; font-weight: 300; color: var(--cream-dim); line-height: 1.85; margin-bottom: 1.3rem; }
+.trust-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: .9rem; }
+.trust-item { display: flex; align-items: flex-start; gap: .8rem; font-size: .9rem; font-weight: 300; color: var(--cream-dim); }
+.trust-item::before { content: '✓'; color: var(--gold); flex-shrink: 0; margin-top: .05em; }
+
+/* ── PROCESS ── */
+#process { padding: 9rem 3rem; background: var(--espresso); }
+.process-inner { max-width: 960px; margin: 0 auto; }
+.process-header { text-align: center; margin-bottom: 5rem; }
+.timeline { position: relative; }
+.timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold) 20%, var(--gold) 80%, transparent); transform: translateX(-50%); }
+.t-step { display: grid; grid-template-columns: 1fr 56px 1fr; gap: 1.5rem; align-items: center; margin-bottom: 3.5rem; }
+.t-step:nth-child(even) .t-content { order: 3; }
+.t-step:nth-child(even) .t-mid    { order: 2; }
+.t-step:nth-child(even) .t-empty  { order: 1; }
+.t-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 3px solid var(--espresso); box-shadow: 0 0 0 1px var(--gold), 0 0 12px rgba(200,128,16,.4); margin: 0 auto; }
+.t-num { font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: .4rem; }
+.t-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 400; margin-bottom: .4rem; }
+.t-body { font-size: .88rem; font-weight: 300; color: var(--cream-dim); line-height: 1.72; }
+.t-content { text-align: right; }
+.t-step:nth-child(even) .t-content { text-align: left; }
+.t-mid { display: flex; flex-direction: column; align-items: center; }
+
+/* ── REVIEWS ── */
+#reviews { padding: 9rem 3rem; background: oklch(9% 0.022 35); }
+.reviews-inner { max-width: 1180px; margin: 0 auto; }
+.reviews-header { text-align: center; margin-bottom: 4.5rem; }
+.reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.review-card { background: var(--espresso-mid); border: 1px solid rgba(200,128,16,.09); padding: 2rem; display: flex; flex-direction: column; }
+.review-stars { color: var(--gold); font-size: .8rem; letter-spacing: .12em; margin-bottom: 1rem; }
+.review-text { font-family: var(--serif); font-size: 1.02rem; font-style: italic; font-weight: 300; line-height: 1.7; color: var(--cream); flex: 1; margin-bottom: 1.4rem; }
+.review-author { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: var(--cream-dim); }
+.review-badge { display: inline-block; font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; padding: .18rem .55rem; border: 1px solid rgba(200,128,16,.25); color: var(--gold); margin-top: .5rem; }
+
+/* ── CTA ── */
+#cta { position: relative; overflow: hidden; padding: 11rem 3rem; text-align: center; background: var(--espresso); }
+.cta-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(200,128,16,.08), transparent); pointer-events: none; }
+.cta-inner { position: relative; z-index: 2; max-width: 680px; margin: 0 auto; }
+.cta-eyebrow { font-size: .66rem; letter-spacing: .36em; text-transform: uppercase; color: var(--t-amber); margin-bottom: 1.4rem; }
+.cta-title { font-family: var(--serif); font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 300; line-height: 1.08; margin-bottom: 1.6rem; }
+.cta-body { font-size: 1.05rem; font-weight: 300; color: var(--cream-dim); line-height: 1.78; margin-bottom: 3rem; }
+.email-form { display: flex; max-width: 480px; margin: 0 auto 1rem; }
+.email-input { flex: 1; background: rgba(245,237,224,.05); border: 1px solid rgba(245,237,224,.18); border-right: none; color: var(--cream); padding: 1rem 1.4rem; font-family: var(--sans); font-size: .9rem; outline: none; }
+.email-input:focus { border-color: rgba(200,128,16,.5); }
+.email-input::placeholder { color: var(--cream-dim); }
+.email-submit { background: var(--gold); border: none; color: var(--espresso); padding: 1rem 1.8rem; font-family: var(--sans); font-size: .76rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: background .3s; white-space: nowrap; }
+.email-submit:hover { background: var(--cream); }
+.cta-note { font-size: .75rem; color: var(--ash); }
+.shop-btns { display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap; }
+
+/* ── FOOTER ── */
+footer { background: oklch(5% 0.018 35); border-top: 1px solid rgba(200,128,16,.1); padding: 4rem 3rem 2rem; }
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.footer-logo { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--cream); letter-spacing: .07em; margin-bottom: 1rem; }
+.footer-logo span { color: var(--gold); }
+.footer-tagline { font-size: .88rem; font-weight: 300; color: var(--cream-dim); line-height: 1.7; margin-bottom: 1rem; }
+.footer-sub-tag { font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: var(--t-amber); }
+.footer-col-title { font-size: .63rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
+.footer-links a { font-size: .88rem; color: var(--cream-dim); text-decoration: none; transition: color .3s; }
+.footer-links a:hover { color: var(--cream); }
+.footer-bottom { border-top: 1px solid rgba(245,237,224,.06); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: .72rem; color: var(--ash); }
+.footer-social { display: flex; gap: 1.5rem; }
+.social-link { font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color .3s; }
+.social-link:hover { color: var(--gold); }
+
+/* ── REVEAL ANIMATIONS ── */
+.reveal      { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s ease; }
+.reveal-left { opacity: 0; transform: translateX(-36px); transition: opacity .9s ease, transform .9s ease; }
+.reveal-right{ opacity: 0; transform: translateX(36px);  transition: opacity .9s ease, transform .9s ease; }
+.reveal.visible, .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: translate(0); }
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .22s; }
+.reveal-delay-3 { transition-delay: .36s; }
+
+/* ── GLOW ORB ── */
+.glow-orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(90px); opacity: .1; }
+
+@media (max-width: 900px) {
+  nav { padding: 1.1rem 1.2rem; }
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+  .mobile-cta-bar { display: block; }
+  body { padding-bottom: 72px; }
+  .hero-content { padding: 0 1.2rem; max-width: 62vw; }
+  .hero-copy { padding-top: clamp(4.8rem, 14vw, 6.5rem); }
+  .hero-cta-zone { padding-bottom: 5rem; }
+  .hero-sub { font-size: .88rem; max-width: 100%; }
+  .hero-title { font-size: clamp(2.4rem, 9vw, 5rem); }
+  .hero-product { width: 46vw; max-width: 220px; right: 0; bottom: 0; }
+  .hero-trust { gap: .7rem; }
+  .interrupt-inner, .origin-layout, .farmers-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  #interrupt, #origin, #volcanic, #farmers, #process, #reviews { padding: 5rem 1.4rem; }
+  .roasts-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+  #roasts { padding: 5rem 1.4rem; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .volcanic-pillars { grid-template-columns: 1fr; }
+  .t-step { grid-template-columns: 48px 1fr; }
+  .timeline::before { left: 23px; }
+  .t-empty { display: none; }
+  .t-step:nth-child(even) .t-content { order: 2; text-align: left; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .email-form { flex-direction: column; }
+  .email-input { border-right: 1px solid rgba(245,237,224,.18); }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  #cta { padding: 6rem 1.4rem 5rem; }
+  footer { padding: 3rem 1.4rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">STONEHAWKER <span>COFFEE</span></a>
+  <ul class="nav-links">
+    <li><a href="#origin">Our Story</a></li>
+    <li><a href="#roasts">The Roasts</a></li>
+    <li><a href="#farmers">Farmers</a></li>
+    <li><a href="#process">Process</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Order Now</button>
+  <button class="nav-hamburger" id="hamburger-btn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile-menu" id="mobile-menu">
+  <button class="nav-mobile-close" id="mobile-menu-close" aria-label="Close menu">×</button>
+  <a href="#origin" onclick="closeMobileMenu()">Our Story</a>
+  <a href="#roasts" onclick="closeMobileMenu()">The Roasts</a>
+  <a href="#farmers" onclick="closeMobileMenu()">Farmers</a>
+  <a href="#process" onclick="closeMobileMenu()">Process</a>
+  <a href="#cta" onclick="closeMobileMenu()" style="color:var(--gold);font-size:1.6rem;margin-top:.5rem">Order Now →</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-video-wrap">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="assets/images/hero-poster.jpg"
+      id="hero-video">
+      <source src="uploads/1777228111038-6zqv9xkilcl (1).mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-overlay-top"></div>
+  <div class="hero-overlay-vignette"></div>
+  <div class="hero-overlay-gradient"></div>
+  <!-- Three.js Maya textile particle canvas — activated by initHeroParticles() in site.js -->
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+  <!-- 16oz branded product anchor — assets/images/bag-ashira.jpg -->
+  <div class="hero-product" aria-hidden="true">
+    <img
+      src="assets/images/bag-ashira.jpg"
+      alt=""
+      loading="eager"
+      fetchpriority="high"
+      width="1440"
+      height="2070"
+      decoding="async">
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">Lake Atitlán, Guatemala · 5,280ft · Est. 2013</p>
+      <h1 class="hero-title">
+        Born from<br><em>Ancient Fire.</em><br>
+        <span class="vol">Volcanically</span> Organic.
+      </h1>
+      <p class="hero-sub">Shade-grown in volcanic ash at 5,280ft. Hand-picked by Maya farmers. Nothing added. Nothing like anything you've tasted.</p>
+    </div>
+    <div class="hero-cta-zone">
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('roasts').scrollIntoView({behavior:'smooth'})">Shop the Roasts</button>
+        <button class="btn-ghost" onclick="document.getElementById('origin').scrollIntoView({behavior:'smooth'})">Our Story</button>
+      </div>
+      <div class="hero-trust">
+        <span class="hero-trust-item">Single Origin</span>
+        <span class="hero-trust-sep"></span>
+        <span class="hero-trust-item">Fair Trade Direct</span>
+        <span class="hero-trust-sep"></span>
+        <span class="hero-trust-item">Naturally Organic</span>
+        <span class="hero-trust-sep"></span>
+        <span class="hero-trust-item">Free shipping $40+</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- MOBILE STICKY CTA -->
+<div class="mobile-cta-bar" id="mobile-cta-bar">
+  <div class="mobile-cta-inner">
+    <button class="btn-primary" onclick="document.getElementById('roasts').scrollIntoView({behavior:'smooth'})">Shop Roasts — from $15</button>
+    <button class="btn-ghost" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Early Access</button>
+  </div>
+</div>
+
+<!-- CHEVRON DIVIDER -->
+<svg class="chevron-divider" viewBox="0 0 1440 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <polyline points="0,36 360,6 720,36 1080,6 1440,36" fill="none" stroke="#E0187A" stroke-width="1.5" opacity="0.5"/>
+  <polyline points="0,36 360,6 720,36 1080,6 1440,36" fill="none" stroke="#1A9AB8" stroke-width="1" opacity="0.4" transform="translate(0,5)"/>
+  <polyline points="0,36 360,6 720,36 1080,6 1440,36" fill="none" stroke="#D85A18" stroke-width="1" opacity="0.35" transform="translate(0,9)"/>
+  <polyline points="0,36 360,6 720,36 1080,6 1440,36" fill="none" stroke="#7CC800" stroke-width="0.8" opacity="0.3" transform="translate(0,13)"/>
+</svg>
+
+<!-- PATTERN INTERRUPT -->
+<section id="interrupt">
+  <div class="glow-orb" style="width:500px;height:500px;background:var(--t-orange);left:-80px;top:50%;transform:translateY(-50%)"></div>
+  <div class="interrupt-inner">
+    <div class="reveal-left">
+      <p class="interrupt-label">The Problem with Premium Coffee</p>
+      <h2 class="interrupt-headline">
+        What they call<br>"specialty" coffee<br><strong>isn't special.</strong>
+      </h2>
+    </div>
+    <div class="reveal-right">
+      <div class="interrupt-body">
+        <p>Starbucks. Nespresso. The $18 bag at your grocery store. All of it — industrially farmed on cleared land, blasted with sun, drenched in synthetic fertilizer, warehoused for months. Marketing dressed up as craft.</p>
+        <p>Stonehawker grows in volcanic ash from calderas that have been building the world's most mineral-rich soil for ten thousand years. Shade-grown in highland jungle. Hand-picked. No chemicals needed — the earth already did that work before your great-grandfather was born.</p>
+      </div>
+      <div class="stat-grid reveal reveal-delay-2">
+        <div class="stat-box"><div class="stat-num">10+</div><div class="stat-label">Years sourcing</div></div>
+        <div class="stat-box"><div class="stat-num">5,280<span style="font-size:1.4rem">ft</span></div><div class="stat-label">Altitude grown</div></div>
+        <div class="stat-box"><div class="stat-num">100%</div><div class="stat-label">Fair trade direct</div></div>
+        <div class="stat-box"><div class="stat-num">$0</div><div class="stat-label">In pesticides</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHEVRON DIVIDER -->
+<svg class="chevron-divider" viewBox="0 0 1440 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <polyline points="0,0 360,30 720,0 1080,30 1440,0" fill="none" stroke="#C88010" stroke-width="1.5" opacity="0.4"/>
+  <polyline points="0,0 360,30 720,0 1080,30 1440,0" fill="none" stroke="#1A38C0" stroke-width="1" opacity="0.35" transform="translate(0,-5)"/>
+  <polyline points="0,0 360,30 720,0 1080,30 1440,0" fill="none" stroke="#E0187A" stroke-width="0.8" opacity="0.3" transform="translate(0,-9)"/>
+</svg>
+
+<!-- ORIGIN -->
+<section id="origin">
+  <div class="origin-inner">
+    <div class="reveal">
+      <p class="section-label">Where it all begins</p>
+      <h2 class="section-title">A lake ringed by<br>sleeping volcanoes.</h2>
+    </div>
+    <div class="origin-layout">
+      <div class="volcano-scene reveal-left">
+        <svg class="volcano-svg" viewBox="0 0 480 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#060e12"/><stop offset="100%" stop-color="#040a0e"/></linearGradient>
+            <linearGradient id="lake2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0d2838" stop-opacity="0.9"/><stop offset="100%" stop-color="#020a10"/></linearGradient>
+            <radialGradient id="glowA" cx="50%" cy="25%" r="45%"><stop offset="0%" stop-color="#D85A18" stop-opacity="0.07"/><stop offset="100%" stop-color="#D85A18" stop-opacity="0"/></radialGradient>
+            <radialGradient id="glowB" cx="30%" cy="60%" r="30%"><stop offset="0%" stop-color="#1A9AB8" stop-opacity="0.08"/><stop offset="100%" stop-color="#1A9AB8" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="480" height="360" fill="url(#sky2)"/>
+          <rect width="480" height="360" fill="url(#glowA)"/>
+          <rect width="480" height="360" fill="url(#glowB)"/>
+          <!-- Stars -->
+          <circle cx="55" cy="35" r="1.2" fill="white" opacity="0.45"/>
+          <circle cx="130" cy="22" r=".9" fill="white" opacity="0.55"/>
+          <circle cx="210" cy="48" r="1" fill="white" opacity="0.35"/>
+          <circle cx="300" cy="28" r=".8" fill="white" opacity="0.6"/>
+          <circle cx="390" cy="45" r="1.1" fill="white" opacity="0.4"/>
+          <circle cx="445" cy="18" r=".7" fill="white" opacity="0.5"/>
+          <circle cx="28" cy="75" r=".9" fill="white" opacity="0.35"/>
+          <circle cx="180" cy="15" r=".6" fill="white" opacity="0.5"/>
+          <circle cx="340" cy="62" r=".8" fill="white" opacity="0.3"/>
+          <!-- Distant volcanoes -->
+          <polygon points="-10,240 90,105 190,240" fill="#0a1810" opacity="0.8"/>
+          <polygon points="290,240 400,82 490,240" fill="#0a1810" opacity="0.8"/>
+          <!-- Main left volcano -->
+          <polygon points="-10,250 135,75 285,250" fill="#12281a"/>
+          <polygon points="60,250 135,75 210,250" fill="#162e1e"/>
+          <!-- Main right volcano -->
+          <polygon points="200,250 355,58 490,250" fill="#0e2015"/>
+          <polygon points="275,250 355,58 440,250" fill="#122418"/>
+          <!-- Volcano highlights -->
+          <line x1="135" y1="75" x2="160" y2="140" stroke="#1A9AB8" stroke-width="0.5" opacity="0.2"/>
+          <line x1="355" y1="58" x2="380" y2="120" stroke="#1A9AB8" stroke-width="0.5" opacity="0.2"/>
+          <!-- Snow/mist caps -->
+          <polygon points="135,75 124,108 146,108" fill="white" opacity="0.12"/>
+          <polygon points="355,58 343,92 367,92" fill="white" opacity="0.09"/>
+          <!-- Lake Atitlán -->
+          <ellipse cx="240" cy="295" rx="245" ry="72" fill="url(#lake2)"/>
+          <!-- Lake shimmer -->
+          <ellipse cx="240" cy="282" rx="160" ry="12" fill="white" opacity="0.025"/>
+          <ellipse cx="180" cy="292" rx="60" ry="4" fill="#1A9AB8" opacity="0.07"/>
+          <!-- Foreground -->
+          <path d="M0,250 Q80,218 165,238 Q248,258 330,230 Q410,202 490,228 L490,360 L0,360Z" fill="#0a1610"/>
+          <!-- Coffee plants suggestion -->
+          <circle cx="80" cy="248" r="6" fill="#122e18" opacity="0.8"/>
+          <circle cx="95" cy="245" r="5" fill="#142e18" opacity="0.7"/>
+          <circle cx="400" cy="235" r="6" fill="#112a16" opacity="0.8"/>
+          <circle cx="415" cy="238" r="4" fill="#132a16" opacity="0.7"/>
+        </svg>
+      </div>
+      <div class="reveal-right">
+        <p class="section-label" style="margin-bottom:.8rem">Lake Atitlán · Sierra Madre · Guatemala</p>
+        <div class="origin-text">
+          <p>More than a decade ago, our founder traveled to the Guatemalan highlands chasing a single question: where does the world's most complex coffee actually come from? The answer was a lake ringed by three ancient volcanoes, sitting at 5,280 feet above sea level in the cloud forests of the Sierra Madre.</p>
+          <p>What he found wasn't just extraordinary coffee. He found extraordinary people — Maya families farming the same volcanic hillsides their ancestors worked for generations, with a reverence for the land that no certification can manufacture.</p>
+          <p>Stonehawker was born from that first handshake, and built on every one that followed. Ten harvests later, we return to the same farms, pay above-market rates, and bring their work to American coffee drinkers who can finally taste the difference that soil — real, ancient, alive soil — makes in a cup.</p>
+          <div class="badges">
+            <span class="badge">Single Origin</span>
+            <span class="badge">Fair Trade Direct</span>
+            <span class="badge">Shade Grown</span>
+            <span class="badge">Naturally Organic</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="origin-caption reveal">Lake Atitlán, Sololá Department · 1,562m elevation · Surrounded by Volcán Atitlán, Tolimán &amp; San Pedro</p>
+  </div>
+</section>
+
+<!-- CHEVRON DIVIDER -->
+<svg class="chevron-divider" viewBox="0 0 1440 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <polyline points="0,36 360,6 720,36 1080,6 1440,36" fill="none" stroke="#7CC800" stroke-width="1.5" opacity="0.4"/>
+  <polyline points="0,36 360,6 720,36 1080,6 1440,36" fill="none" stroke="#E0187A" stroke-width="1" opacity="0.3" transform="translate(0,5)"/>
+  <polyline points="0,36 360,6 720,36 1080,6 1440,36" fill="none" stroke="#C88010" stroke-width="0.8" opacity="0.3" transform="translate(0,9)"/>
+</svg>
+
+<!-- VOLCANIC DIFFERENCE -->
+<section id="volcanic">
+  <div class="volcanic-inner">
+    <div class="volcanic-header reveal">
+      <p class="section-label">The Science of Soil</p>
+      <h2 class="section-title">Volcanic ash isn't a<br>nice detail. It's everything.</h2>
+    </div>
+    <div class="volcanic-pillars">
+      <div class="pillar reveal reveal-delay-1">
+        <div class="pillar-title">Mineral Density</div>
+        <p class="pillar-body">Basalt from ancient eruptions breaks down over millennia into soil with extraordinary potassium, phosphorus, and calcium — the precise nutrients driving complex flavor development in coffee. No supplement replicates it.</p>
+      </div>
+      <div class="pillar reveal reveal-delay-2">
+        <div class="pillar-title">Shade &amp; Altitude</div>
+        <p class="pillar-body">At 5,280ft in highland jungle, our beans grow slowly under a natural canopy. Slow development = lower acidity, higher sugar content, and layered complexity. American sun-grown coffee simply cannot compete.</p>
+      </div>
+      <div class="pillar reveal reveal-delay-3">
+        <div class="pillar-title">Zero Inputs</div>
+        <p class="pillar-body">The volcanic soil is so naturally rich that pesticides and synthetic fertilizers aren't just unnecessary — they'd be counterproductive. Our "organic" certification is the land itself, ten thousand years in the making.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE ROASTS -->
+<section id="roasts">
+  <div class="roasts-inner">
+    <div class="roasts-header reveal">
+      <p class="section-label">The Collection — Lake Atitlán, Guatemala</p>
+      <h2 class="section-title">Three roasts.<br>One origin. Zero compromise.</h2>
+      <p style="font-size:.9rem;color:var(--cream-dim);font-weight:300;max-width:520px;margin:1rem auto 0;line-height:1.7">Each roast name is drawn from the living world of Lake Atitlán — the water, the bird, the wind. The bags wear traditional Maya textile patterns from the villages where your coffee is grown.</p>
+    </div>
+    <div class="roasts-grid">
+
+      <!-- LAGO · Light -->
+      <div class="roast-card lago">
+        <div class="roast-inner">
+          <div class="bag-canvas-wrap">
+            <canvas data-bag="lago" style="width:200px;height:290px"></canvas>
+          </div>
+          <div class="roast-name">Lago</div>
+          <div class="roast-sub">Light Roast · Highland Reserve</div>
+          <p class="roast-desc">As clear and luminous as the lake it's named for. Jasmine florals and white peach open the cup, followed by a honey-citrus sweetness and an impossibly silky finish. The volcanic mineral signature is subtle but unmistakable.</p>
+          <div class="taste-tags">
+            <span class="tag">Jasmine</span><span class="tag">White Peach</span><span class="tag">Honey Citrus</span>
+          </div>
+          <div class="size-selector">
+            <button class="size-btn size-toggle active" data-price="15" data-label="8 oz bag" data-bag-key="lago">
+              <span class="sz">8 oz</span><span class="pr">$15</span>
+            </button>
+            <button class="size-btn size-toggle" data-price="25" data-label="16 oz bag" data-bag-key="lago">
+              <span class="sz">16 oz</span><span class="pr">$25</span>
+            </button>
+          </div>
+          <div class="roast-price"><span class="roast-price-num">$15</span> &nbsp;<span class="size-label">8 oz bag</span></div>
+          <button class="btn-add">Add to Cart</button>
+          <p class="roast-process">Washed · Sun-dried on raised beds</p>
+          <p class="roast-date">Roasted April 15, 2026</p>
+        </div>
+      </div>
+
+      <!-- QUETZAL · Medium -->
+      <div class="roast-card quetzal">
+        <div class="roast-inner">
+          <div class="bag-canvas-wrap">
+            <canvas data-bag="quetzal" style="width:200px;height:290px"></canvas>
+          </div>
+          <div class="roast-name">Quetzal</div>
+          <div class="roast-sub">Medium Roast · Volcanic Reserve</div>
+          <p class="roast-desc">Named for Guatemala's sacred bird — vibrant, impossible to ignore. Dark cherry and baker's chocolate build over brown sugar sweetness, finishing with roasted almond and a velvet body you'll reach for every single morning.</p>
+          <div class="taste-tags">
+            <span class="tag">Dark Cherry</span><span class="tag">Baker's Chocolate</span><span class="tag">Roasted Almond</span>
+          </div>
+          <div class="size-selector">
+            <button class="size-btn size-toggle active" data-price="15" data-label="8 oz bag" data-bag-key="quetzal">
+              <span class="sz">8 oz</span><span class="pr">$15</span>
+            </button>
+            <button class="size-btn size-toggle" data-price="25" data-label="16 oz bag" data-bag-key="quetzal">
+              <span class="sz">16 oz</span><span class="pr">$25</span>
+            </button>
+          </div>
+          <div class="roast-price"><span class="roast-price-num">$15</span> &nbsp;<span class="size-label">8 oz bag</span></div>
+          <button class="btn-add">Add to Cart</button>
+          <p class="roast-process">Washed · Natural ferment · Raised bed dried</p>
+          <p class="roast-date">Roasted April 17, 2026</p>
+        </div>
+      </div>
+
+      <!-- XOCOMIL · Dark -->
+      <div class="roast-card xocomil">
+        <div class="roast-inner">
+          <div class="bag-canvas-wrap">
+            <canvas data-bag="xocomil" style="width:200px;height:290px"></canvas>
+          </div>
+          <div class="roast-name">Xocomil</div>
+          <div class="roast-sub">Dark Roast · Crater Select</div>
+          <p class="roast-desc">Named for the legendary afternoon wind that tears across Atitlán without warning. Commanding and deep — black cocoa and smoked cedar open to dark molasses earthiness that only ancient volcanic soil at altitude can produce.</p>
+          <div class="taste-tags">
+            <span class="tag">Black Cocoa</span><span class="tag">Smoked Cedar</span><span class="tag">Dark Molasses</span>
+          </div>
+          <div class="size-selector">
+            <button class="size-btn size-toggle active" data-price="15" data-label="8 oz bag" data-bag-key="xocomil">
+              <span class="sz">8 oz</span><span class="pr">$15</span>
+            </button>
+            <button class="size-btn size-toggle" data-price="25" data-label="16 oz bag" data-bag-key="xocomil">
+              <span class="sz">16 oz</span><span class="pr">$25</span>
+            </button>
+          </div>
+          <div class="roast-price"><span class="roast-price-num">$15</span> &nbsp;<span class="size-label">8 oz bag</span></div>
+          <button class="btn-add">Add to Cart</button>
+          <p class="roast-process">Natural process · Extended ferment</p>
+          <p class="roast-date">Roasted April 20, 2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHEVRON DIVIDER -->
+<svg class="chevron-divider" viewBox="0 0 1440 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <polyline points="0,0 360,30 720,0 1080,30 1440,0" fill="none" stroke="#1A9AB8" stroke-width="1.5" opacity="0.4"/>
+  <polyline points="0,0 360,30 720,0 1080,30 1440,0" fill="none" stroke="#D85A18" stroke-width="1" opacity="0.3" transform="translate(0,-5)"/>
+  <polyline points="0,0 360,30 720,0 1080,30 1440,0" fill="none" stroke="#7CC800" stroke-width="0.8" opacity="0.28" transform="translate(0,-9)"/>
+</svg>
+
+<!-- FARMERS -->
+<section id="farmers">
+  <div class="farmers-inner">
+    <div class="reveal">
+      <p class="section-label">The Hands Behind Every Cup</p>
+      <h2 class="section-title">Not a supply chain.<br>A decade of trust.</h2>
+    </div>
+    <div class="farmers-layout">
+      <div class="farmers-visual reveal-left">
+        <div class="ph-inner" style="width:100%">
+          <div class="placeholder-lines" style="width:85%">
+            <div class="ph-line" style="width:100%"></div><div class="ph-line" style="width:88%"></div>
+            <div class="ph-line" style="width:94%"></div><div class="ph-line" style="width:79%"></div>
+            <div class="ph-line" style="width:97%"></div><div class="ph-line" style="width:85%"></div>
+            <div class="ph-line" style="width:91%"></div><div class="ph-line" style="width:88%"></div>
+            <div class="ph-line" style="width:95%"></div><div class="ph-line" style="width:82%"></div>
+          </div>
+          <p class="ph-label">Farm &amp; farmer photography<br>coming soon</p>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="farmers-text">
+          <p>The Maya families we partner with have farmed the volcanic slopes of Atitlán for generations. They know the land in ways no agronomy textbook can teach — when the rains shift, which hillside faces the right microclimate, which cherries are three days from perfect.</p>
+          <p>We don't teach them how to grow coffee. We show up every season, pay above-fair-trade rates, and listen. These aren't supplier relationships. They're friendships built over ten harvests and counting.</p>
+          <p>When you open a bag of Stonehawker, you're holding something those farmers are proud of. That's not a marketing line. It's a promise we make with every order we place.</p>
+        </div>
+        <div class="trust-list">
+          <div class="trust-item">Above-market direct trade pricing, paid before the harvest ships</div>
+          <div class="trust-item">Same farming families since year one — no middlemen, ever</div>
+          <div class="trust-item">Annual visits to every partner farm on the Atitlán shoreline</div>
+          <div class="trust-item">Zero synthetic inputs — the land and the people demand it</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-inner">
+    <div class="process-header reveal">
+      <p class="section-label">Farm to Your Door</p>
+      <h2 class="section-title">Five intentional steps.<br>No shortcuts.</h2>
+    </div>
+    <div class="timeline">
+      <div class="t-step">
+        <div class="t-content reveal-left"><p class="t-num">01</p><h3 class="t-title">Hand-Selected Harvest</h3><p class="t-body">Ripe cherries only — picked by hand on the volcanic slopes, sorted the same day. Machines don't work here. The hillsides don't allow it, and the quality demands they don't.</p></div>
+        <div class="t-mid"><div class="t-dot"></div></div>
+        <div class="t-empty"></div>
+      </div>
+      <div class="t-step">
+        <div class="t-empty"></div>
+        <div class="t-mid"><div class="t-dot"></div></div>
+        <div class="t-content reveal-right"><p class="t-num">02</p><h3 class="t-title">Washed &amp; Sun-Dried</h3><p class="t-body">Beans are washed in fresh mountain spring water and dried under the Guatemalan sun on raised African beds — even drying, no contact with the earth, clean cup.</p></div>
+      </div>
+      <div class="t-step">
+        <div class="t-content reveal-left"><p class="t-num">03</p><h3 class="t-title">Direct Import</h3><p class="t-body">We ship direct from farm to our US facility — no brokers, no warehousing middlemen. Green beans arrive fresh-crop and are roasted within weeks of clearing customs.</p></div>
+        <div class="t-mid"><div class="t-dot"></div></div>
+        <div class="t-empty"></div>
+      </div>
+      <div class="t-step">
+        <div class="t-empty"></div>
+        <div class="t-mid"><div class="t-dot"></div></div>
+        <div class="t-content reveal-right"><p class="t-num">04</p><h3 class="t-title">Small-Batch Roasting</h3><p class="t-body">Roasted in small batches to three precise profiles — Lago, Quetzal, Xocomil — each calibrated to what the bean's natural character is asking for. Never forced. Never masked.</p></div>
+      </div>
+      <div class="t-step">
+        <div class="t-content reveal-left"><p class="t-num">05</p><h3 class="t-title">Sealed &amp; Shipped</h3><p class="t-body">Nitrogen-flushed, resealable bags heat-sealed within 24 hours of roasting. Delivered anywhere in the US. From volcanic soil to your cup in days, not months.</p></div>
+        <div class="t-mid"><div class="t-dot"></div></div>
+        <div class="t-empty"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-inner">
+    <div class="reviews-header reveal">
+      <p class="section-label">From Those Who Know Coffee</p>
+      <h2 class="section-title">They tried it once.<br>They never went back.</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I've spent fifteen years chasing 'the best cup' through every specialty roaster I could find. Stonehawker's Quetzal is the first time I've stopped looking. There's something in this coffee that tastes like the earth actually meant it."</p>
+        <p class="review-author">Daniel M. · Portland, OR</p>
+        <span class="review-badge">Verified · Quetzal Medium</span>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I switched to Stonehawker specifically because I don't want mystery chemicals in my body every morning. The fact that it's naturally organic — not certified by a bureaucracy but by the actual geology of the land — is exactly the kind of thing I care about."</p>
+        <p class="review-author">Priya S. · Austin, TX</p>
+        <span class="review-badge">Verified · Lago Light</span>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I was a Starbucks Reserve guy — thought I was drinking good coffee. My first bag of Xocomil was a genuinely embarrassing moment. I've been drinking bad coffee my whole adult life and I didn't know it until this arrived."</p>
+        <p class="review-author">Ryan T. · Chicago, IL</p>
+        <span class="review-badge">Verified · Xocomil Dark</span>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Sent a sampler set to my father-in-law for his birthday as a last-minute gift. He called three days later to ask where to order more — then asked if I could 'just buy him a subscription.' He's 68. He drinks instant. This coffee changed him."</p>
+        <p class="review-author">Jessica W. · Nashville, TN</p>
+        <span class="review-badge">Verified · Sampler Bundle</span>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"As a home barista who dials in espresso obsessively, the Quetzal at 18g / 36g out at 27 seconds is a revelation. Crema is thick, the cherry-chocolate flavors hold through milk beautifully. Whoever is doing the processing on this farm is doing something special."</p>
+        <p class="review-author">Alex K. · Denver, CO</p>
+        <span class="review-badge">Verified · Quetzal Medium</span>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I ordered 16oz of each roast for our office of twelve and we went through all three bags in under two weeks. People who have never cared about coffee were asking me where it came from. We now order monthly. The story alone is worth sharing — the coffee seals the deal."</p>
+        <p class="review-author">Marcus L. · Seattle, WA</p>
+        <span class="review-badge">Verified · Office Bundle</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="glow-orb" style="width:700px;height:700px;background:var(--t-amber);left:50%;top:50%;transform:translate(-50%,-50%)"></div>
+  <div class="cta-inner reveal">
+    <p class="cta-eyebrow">Volcanically Organic · Lake Atitlán, Guatemala</p>
+    <h2 class="cta-title">The best cup of<br>your life starts<br>at <em style="font-style:italic;color:var(--t-pink)">$15.</em></h2>
+    <p class="cta-body">8oz bags at $15. 16oz bags at $25. Roasted to order, shipped direct. Free shipping on orders over $40. If your first bag doesn't change how you think about coffee, we'll make it right — no questions.</p>
+    <div class="shop-btns">
+      <button class="btn-primary" style="font-size:.88rem;padding:1.1rem 2.8rem" onclick="alert('Shop launching soon — enter your email below to be first.')">Shop All Roasts</button>
+      <button class="btn-ghost" style="font-size:.88rem;padding:1.1rem 2.8rem" onclick="document.querySelector('.email-form').scrollIntoView()">Get Early Access</button>
+    </div>
+    <p style="font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:1.2rem">Or join the list for launch-day pricing:</p>
+    <form class="email-form" onsubmit="handleEmail(event)">
+      <input class="email-input" type="email" placeholder="your@email.com" required>
+      <button class="email-submit" type="submit">Get Early Access</button>
+    </form>
+    <p class="cta-note">No spam. Just coffee news, harvest updates, and exclusive early offers.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">STONEHAWKER <span>COFFEE</span></div>
+        <p class="footer-tagline">Single-origin, shade-grown, volcanically organic Guatemalan coffee. Imported direct from Lake Atitlán. Roasted with intention. Delivered to your door.</p>
+        <p class="footer-sub-tag">Volcanically Organic · Est. 2013</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Shop</div>
+        <ul class="footer-links">
+          <li><a href="#">Lago — Light Roast</a></li>
+          <li><a href="#">Quetzal — Medium Roast</a></li>
+          <li><a href="#">Xocomil — Dark Roast</a></li>
+          <li><a href="#">Sampler Bundle</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Story</div>
+        <ul class="footer-links">
+          <li><a href="#origin">Lake Atitlán</a></li>
+          <li><a href="#farmers">The Farmers</a></li>
+          <li><a href="#volcanic">Volcanic Soil</a></li>
+          <li><a href="#process">Our Process</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Connect</div>
+        <ul class="footer-links">
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Wholesale</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Stonehawker Coffee. All rights reserved. Lake Atitlán, Guatemala.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link">Instagram</a>
+        <a href="#" class="social-link">Email</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js?v=3"></script>
+<script>
+// ── MOBILE MENU ───────────────────────────────────────────────────────
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('hamburger-btn').addEventListener('click', function() {
+  document.getElementById('mobile-menu').classList.add('open');
+  document.body.style.overflow = 'hidden';
+});
+document.getElementById('mobile-menu-close').addEventListener('click', closeMobileMenu);
+
+// ── HERO VIDEO — ensure autoplay on mobile ────────────────────────────
+(function() {
+  var v = document.getElementById('hero-video');
+  if (!v) return;
+  v.muted = true;
+  var p = v.play();
+  if (p !== undefined) {
+    p.catch(function() {
+      v.setAttribute('controls', '');
+    });
+  }
+})();
+
+// ── HERO ENTRANCE ─────────────────────────────────────────────────────
+(function() {
+  var eyebrow  = document.querySelector('.hero-eyebrow');
+  var title    = document.querySelector('.hero-title');
+  var sub      = document.querySelector('.hero-sub');
+  var actions  = document.querySelector('.hero-actions');
+  var trust    = document.querySelector('.hero-trust');
+
+  function animIn(el, delay) {
+    if (!el) return;
+    setTimeout(function() {
+      el.style.transition = 'opacity .9s ease, transform .9s ease';
+      el.style.opacity    = '1';
+      el.style.transform  = 'translateY(0)';
+    }, delay);
+  }
+
+  animIn(eyebrow, 300);
+  animIn(title,   520);
+  animIn(sub,     780);
+  animIn(actions, 1000);
+  if (trust) setTimeout(function() {
+    trust.style.transition = 'opacity 1.1s ease';
+    trust.style.opacity    = '1';
+  }, 1260);
+
+  // Bag enters after the main copy sequence — 1200ms feels like a beat
+  var bag = document.querySelector('.hero-product');
+  if (bag) {
+    setTimeout(function() { bag.classList.add('is-visible'); }, 1200);
+  }
+})();
+
+// ── MOBILE STICKY BAR — hide once user reaches CTA ───────────────────
+(function() {
+  var bar = document.getElementById('mobile-cta-bar');
+  var cta = document.getElementById('cta');
+  if (!bar || !cta) return;
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      bar.style.transform = e.isIntersecting ? 'translateY(120%)' : 'translateY(0)';
+      bar.style.transition = 'transform .35s ease';
+    });
+  }, { threshold: 0.15 });
+  obs.observe(cta);
+})();
+</script>
+</body>
+</html>
