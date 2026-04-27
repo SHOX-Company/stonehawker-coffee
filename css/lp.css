@@ -255,6 +255,18 @@ body{background:var(--bg)}
 }
 .sticky-btn:hover{filter:brightness(1.12)}
 
+/* ── FOOTER ── */
+.lp-footer{
+  padding:2.5rem 1.5rem;
+  text-align:center;
+  border-top:1px solid rgba(var(--accent-r),.08);
+}
+.footer-roasts{
+  font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dim);text-decoration:none;transition:color .2s;
+}
+.footer-roasts:hover{color:var(--accent)}
+
 /* ── RESPONSIVE ── */
 @media(min-width:640px){
   .lp-sec{padding:3.5rem 2rem;max-width:620px}

@@ -14,13 +14,22 @@
   --accent-r:      212, 165, 32;
   --bg-cta-text:   #0A0604;
 }
+/* Content at top — product scene revealed at bottom */
+#hero{ align-items:flex-start }
+.hero-scrim{
+  background:
+    linear-gradient(to bottom, rgba(5,2,1,.97) 0%, rgba(5,2,1,.84) 22%, rgba(5,2,1,.44) 44%, rgba(5,2,1,.1) 62%, transparent 80%),
+    linear-gradient(to right,  rgba(5,2,1,.68) 0%, rgba(5,2,1,.28) 44%, transparent 68%);
+}
+.hero-content{ padding:5.5rem 1.5rem 0 }
+@media(min-width:640px){ .hero-content{ padding:6.5rem 3rem 0 } }
+@media(min-width:960px){ .hero-content{ padding:7.5rem 5rem 0 } }
 </style>
 </head>
 <body>
 
 <nav class="lp-nav" id="nav">
   <a href="index.html" class="nav-logo">STONEHAWKER <span>COFFEE</span></a>
-  <a href="index.html" class="nav-back">← All Roasts</a>
 </nav>
 
 <!-- ── HERO ── -->
@@ -38,7 +47,7 @@
       <em>Ancient Ash.</em><br>
       <em>Volcanically Organic.</em>
     </h1>
-    <p class="hero-sub">Shade-grown in volcanic soil above Lake Atitlán. Hand-picked by Maya farmers. Crisp fruit, floral lift, clean energy in every cup.</p>
+    <p class="hero-sub">Shade-grown above Lake Atitlán.<br>Crisp fruit. Floral lift. Clean energy.</p>
     <button class="btn-cta" onclick="scrollToOffer()">Order Lago Now</button>
     <p class="hero-microcopy">✓ Roasted to order &nbsp;·&nbsp; Ships within 48h &nbsp;·&nbsp; Free returns</p>
   </div>
@@ -193,6 +202,11 @@
   <button class="sticky-btn" onclick="checkout()">Order Lago Now</button>
 </div>
 
+<!-- ── FOOTER ── -->
+<footer class="lp-footer">
+  <a href="index.html" class="footer-roasts">← All Roasts</a>
+</footer>
+
 <script>
 (function(){
   var nav     = document.getElementById('nav');
@@ -225,7 +239,7 @@
   });
 })();
 
-function scrollToOffer(){ document.getElementById('offer').scrollIntoView({behavior:'smooth'}); }
+function scrollToOffer(){ document.getElementById('offer').scrollIntoView({behavior:'instant'}); }
 
 function checkout(){
   /* Shopify Buy Button integration goes here */
