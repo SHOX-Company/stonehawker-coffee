@@ -63,7 +63,7 @@ body{background:var(--bg)}
 }
 .hero-content{
   position:relative;z-index:2;
-  width:100%;padding:0 1.5rem 5.5rem;
+  width:100%;padding:0 1.5rem 7rem;
 }
 .roast-id{
   display:inline-block;
@@ -92,16 +92,16 @@ body{background:var(--bg)}
   text-shadow:0 1px 10px rgba(0,0,0,.65);
 }
 .btn-cta{
-  display:block;
+  display:inline-block;
   background:var(--accent);
   color:var(--bg-cta-text, #0a0604);
-  padding:1rem 2rem;
-  font-size:.8rem;font-weight:500;
-  letter-spacing:.18em;text-transform:uppercase;
-  transition:all .3s;min-height:52px;
-  white-space:nowrap;width:100%;max-width:340px;
+  padding:.85rem 2.4rem;
+  font-size:.74rem;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;
+  transition:all .3s;min-height:48px;
+  white-space:nowrap;
 }
-.btn-cta:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 14px 36px rgba(var(--accent-r),.38)}
+.btn-cta:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 12px 30px rgba(var(--accent-r),.32)}
 .hero-microcopy{
   margin-top:.75rem;
   font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
@@ -219,12 +219,12 @@ body{background:var(--bg)}
   width:100%;background:var(--accent);
   color:var(--bg-cta-text,#0a0604);
   padding:1.1rem 1.6rem;
-  font-size:.82rem;font-weight:500;
-  letter-spacing:.18em;text-transform:uppercase;
+  font-size:.76rem;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;
   transition:all .3s;min-height:56px;
   margin-bottom:.85rem;
 }
-.offer-btn:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 12px 32px rgba(var(--accent-r),.38)}
+.offer-btn:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 10px 28px rgba(var(--accent-r),.32)}
 .offer-guarantee{
   text-align:center;font-size:.64rem;
   color:var(--ash);line-height:1.7;
@@ -258,8 +258,7 @@ body{background:var(--bg)}
 /* ── RESPONSIVE ── */
 @media(min-width:640px){
   .lp-sec{padding:3.5rem 2rem;max-width:620px}
-  .hero-content{padding:0 3rem 6rem;max-width:640px}
-  .btn-cta{max-width:320px}
+  .hero-content{padding:0 3rem 8rem;max-width:640px}
   .reviews-grid{flex-direction:row}
   .rev-card{flex:1}
   .origin-stats{grid-template-columns:repeat(4,1fr)}

@@ -46,7 +46,7 @@
       Volcanically Organic.
     </h1>
     <p class="hero-sub">Shade-grown in volcanic ash at 5,000ft above the sea. Hand-picked by Maya farmers. Nothing added. Nothing like anything you've tasted.</p>
-    <button class="btn-cta" onclick="scrollToOffer()">Get Xocomil — From $26</button>
+    <button class="btn-cta" onclick="scrollToOffer()">Order Xocomil Now</button>
     <p class="hero-microcopy">✓ Roasted to order &nbsp;·&nbsp; Ships within 48h &nbsp;·&nbsp; Free returns</p>
   </div>
 </section>
@@ -186,7 +186,7 @@
         <p class="opt-save">Save $11</p>
       </div>
     </div>
-    <button class="offer-btn" id="offer-btn" onclick="checkout()">Get Xocomil — $26</button>
+    <button class="offer-btn" id="offer-btn" onclick="checkout()">Order Xocomil Now</button>
     <p class="offer-guarantee"><strong>Not for the safe choice.</strong> If Xocomil doesn't change what you think dark roast can be, we roast you something else — no return, no questions. Keep the bag.</p>
   </div>
 </section>
@@ -197,7 +197,7 @@
     <p class="sticky-name">Xocomil · Dark Roast</p>
     <p class="sticky-price" id="sticky-price">$26</p>
   </div>
-  <button class="sticky-btn" onclick="checkout()">Add to Cart</button>
+  <button class="sticky-btn" onclick="checkout()">Order Xocomil Now</button>
 </div>
 
 <script>
@@ -226,8 +226,7 @@
       opts.forEach(function(x){ x.classList.remove('active'); });
       o.classList.add('active');
       var price = '$' + o.dataset.price;
-      btn.textContent = 'Get Xocomil — ' + price;
-      sp.textContent  = price;
+      sp.textContent = price;
     });
   });
 })();

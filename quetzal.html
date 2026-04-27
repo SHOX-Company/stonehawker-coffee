@@ -44,7 +44,7 @@
       Daily Perfection.
     </h1>
     <p class="hero-sub">Volcanic-grown and hand-picked by Maya farmers. Smooth richness, cocoa warmth, and the cup you reach for every morning.</p>
-    <button class="btn-cta" onclick="scrollToOffer()">Get Quetzal — From $22</button>
+    <button class="btn-cta" onclick="scrollToOffer()">Order Quetzal Now</button>
     <p class="hero-microcopy">✓ Roasted to order &nbsp;·&nbsp; Ships within 48h &nbsp;·&nbsp; Free returns</p>
   </div>
 </section>
@@ -184,7 +184,7 @@
         <p class="opt-save">Save $10</p>
       </div>
     </div>
-    <button class="offer-btn" id="offer-btn" onclick="checkout()">Get Quetzal — $22</button>
+    <button class="offer-btn" id="offer-btn" onclick="checkout()">Order Quetzal Now</button>
     <p class="offer-guarantee"><strong>Full refund guarantee.</strong> Not the best medium roast you've tasted? We refund every penny — and you keep the bag. No returns. No questions. No catch.</p>
   </div>
 </section>
@@ -195,7 +195,7 @@
     <p class="sticky-name">Quetzal · Medium Roast</p>
     <p class="sticky-price" id="sticky-price">$22</p>
   </div>
-  <button class="sticky-btn" onclick="checkout()">Add to Cart</button>
+  <button class="sticky-btn" onclick="checkout()">Order Quetzal Now</button>
 </div>
 
 <script>
@@ -224,8 +224,7 @@
       opts.forEach(function(x){ x.classList.remove('active'); });
       o.classList.add('active');
       var price = '$' + o.dataset.price;
-      btn.textContent = 'Get Quetzal — ' + price;
-      sp.textContent  = price;
+      sp.textContent = price;
     });
   });
 })();

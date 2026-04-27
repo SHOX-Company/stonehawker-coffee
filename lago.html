@@ -39,7 +39,7 @@
       Cleanly Organic.
     </h1>
     <p class="hero-sub">Shade-grown in volcanic soil above Lake Atitlán. Hand-picked by Maya farmers. Crisp fruit, floral lift, clean energy in every cup.</p>
-    <button class="btn-cta" onclick="scrollToOffer()">Get Lago — From $15</button>
+    <button class="btn-cta" onclick="scrollToOffer()">Order Lago Now</button>
     <p class="hero-microcopy">✓ Roasted to order &nbsp;·&nbsp; Ships within 48h &nbsp;·&nbsp; Free returns</p>
   </div>
 </section>
@@ -179,7 +179,7 @@
         <p class="opt-save">Save $7</p>
       </div>
     </div>
-    <button class="offer-btn" id="offer-btn" onclick="checkout()">Get Lago — $15</button>
+    <button class="offer-btn" id="offer-btn" onclick="checkout()">Order Lago Now</button>
     <p class="offer-guarantee"><strong>30-day guarantee.</strong> If it's not the best light roast you've tasted, we send you a different roast — no return, no questions. You keep the bag.</p>
   </div>
 </section>
@@ -190,7 +190,7 @@
     <p class="sticky-name">Lago · Light Roast</p>
     <p class="sticky-price" id="sticky-price">$15</p>
   </div>
-  <button class="sticky-btn" onclick="checkout()">Add to Cart</button>
+  <button class="sticky-btn" onclick="checkout()">Order Lago Now</button>
 </div>
 
 <script>
@@ -220,9 +220,7 @@
       opts.forEach(function(x){ x.classList.remove('active'); });
       o.classList.add('active');
       var price = '$' + o.dataset.price;
-      var label = o.dataset.label;
-      btn.textContent = 'Get Lago — ' + price;
-      sp.textContent  = price;
+      sp.textContent = price;
     });
   });
 })();
