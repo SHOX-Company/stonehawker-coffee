@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lago Light Roast — Stonehawker Coffee</title>
+<meta name="description" content="The light roast that actually tastes like something. Blood orange, jasmine, raw honey. Shade-grown at 5,280ft on the volcanic shores of Lake Atitlán. From $26.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       oklch(7% 0.022 35);
+  --bg-mid:   oklch(12% 0.028 35);
+  --cream:    oklch(93% 0.014 80);
+  --dim:      oklch(72% 0.013 78);
+  --ash:      oklch(32% 0.03 80);
+  --accent:   #D4A520;
+  --accent-r: 212, 165, 32;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:var(--sans);overflow-x:hidden}
+
+/* ─── NAV ─── */
+.lp-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.4rem;background:linear-gradient(to bottom,rgba(5,2,1,.9),transparent);transition:background .4s}
+.lp-nav.solid{background:rgba(5,2,1,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(var(--accent-r),.12)}
+.lp-logo{font-family:var(--serif);font-size:1.05rem;font-weight:600;letter-spacing:.1em;color:var(--cream);text-decoration:none}
+.lp-logo span{color:var(--accent)}
+.lp-back{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s}
+.lp-back:hover{color:var(--accent)}
+
+/* ─── HERO ─── */
+#hero{position:relative;height:100svh;min-height:600px;overflow:hidden;background:var(--bg);display:flex;align-items:flex-end}
+.hero-vid{position:absolute;inset:0;z-index:0}
+.hero-vid video{width:100%;height:100%;object-fit:cover;object-position:55% center;display:block}
+.hero-scrim{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(to right, rgba(5,2,1,.94) 0%, rgba(5,2,1,.75) 38%, rgba(5,2,1,.28) 68%, transparent 100%),
+  linear-gradient(to top,   rgba(5,2,1,.98) 0%, rgba(5,2,1,.82) 22%, rgba(5,2,1,.42) 44%, rgba(5,2,1,.1) 64%, transparent 84%)}
+.hero-tint{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 80% 60% at 20% 80%, rgba(var(--accent-r),.08), transparent 70%)}
+.hero-body{position:relative;z-index:2;width:100%;max-width:86vw;padding:0 1.5rem 5rem}
+.hero-eye{font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
+.hero-h1{font-family:var(--serif);font-size:clamp(3rem,11.5vw,5.8rem);font-weight:300;line-height:.93;letter-spacing:-.015em;margin-bottom:1rem;text-shadow:0 2px 28px rgba(0,0,0,.55)}
+.hero-h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:.92rem;font-weight:300;color:rgba(237,225,208,.78);max-width:320px;line-height:1.68;margin-bottom:1.5rem;text-shadow:0 1px 12px rgba(0,0,0,.7)}
+.hero-price{font-size:.72rem;letter-spacing:.12em;color:rgba(var(--accent-r),.8);margin-bottom:1.1rem}
+.btn-hero{display:block;width:100%;max-width:340px;background:var(--accent);color:var(--bg);border:none;padding:1.05rem 1.6rem;font-family:var(--sans);font-size:.82rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .3s;min-height:54px}
+.btn-hero:hover{background:var(--cream);transform:translateY(-2px);box-shadow:0 14px 36px rgba(var(--accent-r),.45)}
+.hero-trust{margin-top:.85rem;font-size:.6rem;letter-spacing:.1em;color:rgba(200,176,140,.5);text-transform:uppercase}
+
+/* ─── TRUST BAR ─── */
+.trust-bar{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;padding:1.1rem 1.4rem;background:var(--bg-mid);border-bottom:1px solid rgba(var(--accent-r),.08)}
+.trust-pill{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:.35rem}
+.trust-pill::before{content:'✓';color:var(--accent);font-size:.7rem}
+
+/* ─── SECTION WRAPPER ─── */
+.s{max-width:540px;margin:0 auto;padding:3.2rem 1.5rem}
+
+/* ─── SECTION LABEL ─── */
+.s-label{font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
+.s-title{font-family:var(--serif);font-size:clamp(2rem,7vw,3.2rem);font-weight:300;line-height:1.06;margin-bottom:1.2rem}
+.s-body{font-size:.92rem;font-weight:300;color:var(--dim);line-height:1.8}
+
+/* ─── BENEFITS ─── */
+#benefits{background:var(--bg-mid)}
+.benefit-list{display:flex;flex-direction:column;gap:1px;margin-top:1.4rem}
+.benefit{display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;align-items:start;background:var(--bg);padding:1.3rem 1rem}
+.benefit-num{font-family:var(--serif);font-size:1.6rem;font-weight:300;color:rgba(var(--accent-r),.35);line-height:1}
+.benefit-title{font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--cream);margin-bottom:.35rem}
+.benefit-copy{font-size:.85rem;font-weight:300;color:var(--dim);line-height:1.72}
+
+/* ─── TASTE → EMOTION ─── */
+#taste{background:var(--bg)}
+.taste-list{margin-top:1.6rem;display:flex;flex-direction:column}
+.taste-item{padding:1.4rem 0;border-top:1px solid rgba(var(--accent-r),.1)}
+.taste-item:last-child{border-bottom:1px solid rgba(var(--accent-r),.1)}
+.taste-note{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.taste-headline{font-family:var(--serif);font-size:1.25rem;font-weight:300;color:var(--cream);margin-bottom:.5rem;font-style:italic}
+.taste-desc{font-size:.85rem;font-weight:300;color:var(--dim);line-height:1.72}
+
+/* ─── ORIGIN ─── */
+#origin{background:var(--bg-mid)}
+.origin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:1.4rem;margin-bottom:1.8rem}
+.origin-cell{background:var(--bg);padding:1.1rem}
+.origin-cell-label{font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-bottom:.3rem}
+.origin-cell-val{font-size:.88rem;color:var(--cream);font-weight:300}
+.origin-quote{font-family:var(--serif);font-size:1.1rem;font-style:italic;font-weight:300;color:var(--dim);line-height:1.78;border-left:2px solid var(--accent);padding-left:1.1rem}
+
+/* ─── PROOF ─── */
+#proof{background:var(--bg)}
+.proof-list{display:flex;flex-direction:column;gap:1.2rem;margin-top:1.4rem}
+.proof-card{background:var(--bg-mid);border:1px solid rgba(var(--accent-r),.09);padding:1.4rem 1.2rem}
+.proof-stars{color:var(--accent);font-size:.72rem;letter-spacing:.12em;margin-bottom:.7rem}
+.proof-text{font-family:var(--serif);font-size:.98rem;font-style:italic;font-weight:300;line-height:1.7;color:var(--cream);margin-bottom:.75rem}
+.proof-author{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)}
+.proof-badge{display:inline-block;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(var(--accent-r),.22);color:var(--accent);padding:.15rem .5rem;margin-top:.4rem}
+
+/* ─── CLOSE ─── */
+#close{background:var(--bg-mid);text-align:center}
+.close-guarantee{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
+.close-title{font-family:var(--serif);font-size:clamp(1.9rem,6.5vw,2.8rem);font-weight:300;line-height:1.1;margin-bottom:1.1rem}
+.close-body{font-size:.9rem;font-weight:300;color:var(--dim);line-height:1.78;max-width:420px;margin:0 auto 1.8rem}
+.close-perks{display:flex;flex-direction:column;gap:.5rem;margin-top:1.2rem}
+.close-perk{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;justify-content:center;gap:.45rem}
+.close-perk::before{content:'▸';color:var(--accent)}
+
+/* ─── STICKY BAR ─── */
+.sticky{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(5,2,1,.97);backdrop-filter:blur(16px);border-top:1px solid rgba(var(--accent-r),.2);padding:.8rem 1.4rem;display:flex;align-items:center;gap:.8rem;justify-content:space-between;transform:translateY(100%);transition:transform .35s ease}
+.sticky.visible{transform:translateY(0)}
+.sticky-info{flex:1;min-width:0}
+.sticky-name{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.sticky-price{font-family:var(--serif);font-size:1.3rem;color:var(--accent);line-height:1.1}
+.btn-sticky{background:var(--accent);color:var(--bg);border:none;padding:.8rem 1.5rem;font-family:var(--sans);font-size:.72rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .25s;white-space:nowrap;min-height:46px;flex-shrink:0}
+.btn-sticky:hover{background:var(--cream)}
+
+/* ─── DIVIDER ─── */
+.rule{height:1px;background:linear-gradient(to right,transparent,rgba(var(--accent-r),.18),transparent);margin:0}
+
+@media(min-width:680px){
+  .s{padding:4rem 2rem;max-width:600px}
+  .hero-body{padding:0 3rem 5.5rem;max-width:580px}
+  .btn-hero{max-width:300px}
+  .origin-grid{grid-template-columns:repeat(4,1fr)}
+  .trust-bar{gap:3rem}
+}
+@media(min-width:960px){
+  .s{max-width:660px}
+  .hero-body{max-width:660px;padding:0 5rem 6rem}
+  .hero-h1{font-size:clamp(4rem,5.5vw,6.4rem)}
+}
+</style>
+</head>
+<body>
+
+<nav class="lp-nav" id="lp-nav">
+  <a href="index.html" class="lp-logo">STONEHAWKER <span>COFFEE</span></a>
+  <a href="index.html" class="lp-back">← All Roasts</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-vid">
+    <video autoplay muted loop playsinline preload="metadata" poster="assets/images/hero-poster.jpg">
+      <source src="assets/video/hero-loop.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-scrim"></div>
+  <div class="hero-tint"></div>
+  <div class="hero-body">
+    <p class="hero-eye">Lake Atitlán · 5,280ft · Light Roast</p>
+    <h1 class="hero-h1">Your Morning<br><em>Just Got</em><br>Honest.</h1>
+    <p class="hero-sub">Most light roasts taste like hot water. Lago doesn't. Blood orange. Jasmine. Raw honey. From 10,000-year-old volcanic soil.</p>
+    <p class="hero-price">From $26 &nbsp;·&nbsp; 32 cups &nbsp;·&nbsp; 81¢ per cup</p>
+    <button class="btn-hero" onclick="addToCart()">Shop Lago — From $26</button>
+    <p class="hero-trust">✓ Roasted to order &nbsp;·&nbsp; Ships in 48h &nbsp;·&nbsp; Free returns</p>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span class="trust-pill">Single Origin</span>
+  <span class="trust-pill">Naturally Organic</span>
+  <span class="trust-pill">Fair Trade Direct</span>
+  <span class="trust-pill">Roasted to Order</span>
+  <span class="trust-pill">30-Day Guarantee</span>
+</div>
+
+<div class="rule"></div>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="s">
+    <p class="s-label">Why Lago</p>
+    <h2 class="s-title">What makes this<br>light roast different.</h2>
+    <div class="benefit-list">
+      <div class="benefit">
+        <span class="benefit-num">01</span>
+        <div>
+          <div class="benefit-title">Zero bitterness. Ever.</div>
+          <p class="benefit-copy">Our volcanic soil produces a natural sweetness that makes adding cream or sugar feel like an insult. The terroir does the work — the roaster just stays out of the way.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <span class="benefit-num">02</span>
+        <div>
+          <div class="benefit-title">81¢ a cup. $6 at the counter.</div>
+          <p class="benefit-copy">A 16oz bag makes 32 cups. That's 81 cents each. A Starbucks medium drip is $3.45. A pour-over is $6+. You're getting a better product for a fraction of the price.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <span class="benefit-num">03</span>
+        <div>
+          <div class="benefit-title">Complexity that stops you mid-sip.</div>
+          <p class="benefit-copy">Grown slowly at altitude under a natural jungle canopy, each cherry takes weeks longer to develop than sun-grown coffee. That extra time is the difference between flat and remarkable.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- TASTE → EMOTION -->
+<section id="taste">
+  <div class="s">
+    <p class="s-label">What You Taste → What You Feel</p>
+    <h2 class="s-title">Taste notes aren't<br>just flavor. They're<br><em>outcomes.</em></h2>
+    <div class="taste-list">
+      <div class="taste-item">
+        <p class="taste-note">Blood Orange</p>
+        <p class="taste-headline">"The clarity arrives before you realize it."</p>
+        <p class="taste-desc">A bright, clean acidity that lifts the fog without lifting your anxiety. Unlike synthetic brightness from over-roasted beans, this comes from the volcanic mineral profile doing exactly what it's supposed to.</p>
+      </div>
+      <div class="taste-item">
+        <p class="taste-note">Jasmine</p>
+        <p class="taste-headline">"The note that makes you slow down."</p>
+        <p class="taste-desc">Most people drink coffee in 4 minutes. Lago makes you take 12. The floral opens mid-cup. Your 5-minute ritual becomes the best part of your morning — not just the functional part.</p>
+      </div>
+      <div class="taste-item">
+        <p class="taste-note">Raw Honey</p>
+        <p class="taste-headline">"Sweetness you didn't add. Can't replicate."</p>
+        <p class="taste-desc">No sugar. No flavoring. The honey finish is the soil. Specifically: the potassium and phosphorus density in basalt-derived volcanic earth, broken down over millennia, expressing itself in a cup. You can't buy that. You can only source it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ORIGIN -->
+<section id="origin">
+  <div class="s">
+    <p class="s-label">The Origin</p>
+    <h2 class="s-title">Where the mountain<br>becomes the cup.</h2>
+    <div class="origin-grid">
+      <div class="origin-cell"><div class="origin-cell-label">Altitude</div><div class="origin-cell-val">5,280 ft</div></div>
+      <div class="origin-cell"><div class="origin-cell-label">Region</div><div class="origin-cell-val">Sololá, GT</div></div>
+      <div class="origin-cell"><div class="origin-cell-label">Process</div><div class="origin-cell-val">Washed</div></div>
+      <div class="origin-cell"><div class="origin-cell-label">Est.</div><div class="origin-cell-val">2013</div></div>
+    </div>
+    <p class="origin-quote">Lake Atitlán sits in a caldera formed by one of Earth's largest volcanic eruptions — 84,000 years ago. The soil is still building. The three volcanoes ringing the lake have been depositing minerals into these farms for longer than modern humans have existed. That's what's in your cup. That's what you taste.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- SOCIAL PROOF -->
+<section id="proof">
+  <div class="s">
+    <p class="s-label">What Real Customers Say</p>
+    <h2 class="s-title">The reviews we didn't<br>have to ask for.</h2>
+    <div class="proof-list">
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-text">"I've paid $18 for pour-overs at world-class specialty cafés in San Francisco. Lago is better. I said what I said."</p>
+        <p class="proof-author">Alex M. — San Francisco, CA</p>
+        <span class="proof-badge">Verified Purchase</span>
+      </div>
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-text">"Switched from a well-known subscription service that I'd been loyal to for 4 years. Not going back. The blood orange note is unmistakable and it's consistent every bag."</p>
+        <p class="proof-author">Sarah C. — Seattle, WA</p>
+        <span class="proof-badge">Verified Purchase</span>
+      </div>
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-text">"My own barista asked what I was drinking when I brought it into the café. That was the moment I knew."</p>
+        <p class="proof-author">Michael T. — Brooklyn, NY</p>
+        <span class="proof-badge">Verified Purchase</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- CLOSE -->
+<section id="close">
+  <div class="s" style="text-align:center">
+    <p class="close-guarantee">The Stonehawker Guarantee</p>
+    <h2 class="close-title">Try it. If it doesn't<br>change your morning,<br><em>keep the bag.</em></h2>
+    <p class="close-body">If Lago isn't the best light roast you've ever had, tell us. We'll send you a different roast, no questions asked, no return needed. You keep the bag. That's how certain we are.</p>
+    <button class="btn-hero" style="margin:0 auto" onclick="addToCart()">Shop Lago — From $26</button>
+    <div class="close-perks">
+      <span class="close-perk">Roasted to order — never sitting in a warehouse</span>
+      <span class="close-perk">Ships within 48 hours of roast date</span>
+      <span class="close-perk">Free shipping on orders $40 and over</span>
+      <span class="close-perk">30-day satisfaction guarantee — no return required</span>
+    </div>
+  </div>
+</section>
+
+<!-- STICKY BUY BAR -->
+<div class="sticky" id="sticky">
+  <div class="sticky-info">
+    <div class="sticky-name">Lago · Light Roast</div>
+    <div class="sticky-price">From $26</div>
+  </div>
+  <button class="btn-sticky" onclick="addToCart()">Add to Cart</button>
+</div>
+
+<script>
+(function(){
+  var nav = document.getElementById('lp-nav');
+  var sticky = document.getElementById('sticky');
+  var hero = document.getElementById('hero');
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY;
+    nav.classList.toggle('solid', y > 60);
+    var heroBot = hero.offsetTop + hero.offsetHeight - 120;
+    sticky.classList.toggle('visible', y > heroBot);
+  }, {passive:true});
+
+  var vid = document.querySelector('video');
+  if(vid){ vid.muted=true; var p=vid.play(); if(p) p.catch(function(){vid.setAttribute('controls','');}); }
+})();
+
+function addToCart(){
+  window.location.href='ashira.html';
+}
+</script>
+</body>
+</html>

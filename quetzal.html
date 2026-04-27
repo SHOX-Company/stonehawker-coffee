@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quetzal Medium Roast — Stonehawker Coffee</title>
+<meta name="description" content="Our best-selling medium roast. Dark cherry, baker's chocolate, volcanic body. The last coffee you'll need to try. From $26 — roasted to order.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       oklch(7% 0.022 35);
+  --bg-mid:   oklch(12% 0.028 35);
+  --cream:    oklch(93% 0.014 80);
+  --dim:      oklch(72% 0.013 78);
+  --ash:      oklch(32% 0.03 80);
+  --accent:   #C01A96;
+  --accent-r: 192, 26, 150;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:var(--sans);overflow-x:hidden}
+
+.lp-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.4rem;background:linear-gradient(to bottom,rgba(5,2,1,.9),transparent);transition:background .4s}
+.lp-nav.solid{background:rgba(5,2,1,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(var(--accent-r),.12)}
+.lp-logo{font-family:var(--serif);font-size:1.05rem;font-weight:600;letter-spacing:.1em;color:var(--cream);text-decoration:none}
+.lp-logo span{color:oklch(68% 0.14 70)}
+.lp-back{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s}
+.lp-back:hover{color:var(--accent)}
+
+#hero{position:relative;height:100svh;min-height:600px;overflow:hidden;background:var(--bg);display:flex;align-items:flex-end}
+.hero-vid{position:absolute;inset:0;z-index:0}
+.hero-vid video{width:100%;height:100%;object-fit:cover;object-position:55% center;display:block}
+.hero-scrim{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(to right, rgba(5,2,1,.94) 0%, rgba(5,2,1,.75) 38%, rgba(5,2,1,.28) 68%, transparent 100%),
+  linear-gradient(to top,   rgba(5,2,1,.98) 0%, rgba(5,2,1,.82) 22%, rgba(5,2,1,.42) 44%, rgba(5,2,1,.1) 64%, transparent 84%)}
+.hero-tint{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 70% 50% at 15% 85%, rgba(var(--accent-r),.07), transparent 70%)}
+.hero-body{position:relative;z-index:2;width:100%;max-width:86vw;padding:0 1.5rem 5rem}
+.hero-eye{font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
+.hero-h1{font-family:var(--serif);font-size:clamp(2.8rem,11vw,5.6rem);font-weight:300;line-height:.93;letter-spacing:-.015em;margin-bottom:1rem;text-shadow:0 2px 28px rgba(0,0,0,.55)}
+.hero-h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:.92rem;font-weight:300;color:rgba(237,225,208,.78);max-width:330px;line-height:1.68;margin-bottom:1.5rem;text-shadow:0 1px 12px rgba(0,0,0,.7)}
+.hero-price{font-size:.72rem;letter-spacing:.12em;color:rgba(var(--accent-r),.85);margin-bottom:1.1rem}
+.btn-hero{display:block;width:100%;max-width:340px;background:var(--accent);color:#fff;border:none;padding:1.05rem 1.6rem;font-family:var(--sans);font-size:.82rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .3s;min-height:54px}
+.btn-hero:hover{background:oklch(68% 0.14 70);color:var(--bg);transform:translateY(-2px);box-shadow:0 14px 36px rgba(var(--accent-r),.4)}
+.hero-trust{margin-top:.85rem;font-size:.6rem;letter-spacing:.1em;color:rgba(200,176,140,.5);text-transform:uppercase}
+
+.trust-bar{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;padding:1.1rem 1.4rem;background:var(--bg-mid);border-bottom:1px solid rgba(var(--accent-r),.08)}
+.trust-pill{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:.35rem}
+.trust-pill::before{content:'✓';color:oklch(68% 0.14 70);font-size:.7rem}
+
+.s{max-width:540px;margin:0 auto;padding:3.2rem 1.5rem}
+.s-label{font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
+.s-title{font-family:var(--serif);font-size:clamp(2rem,7vw,3.2rem);font-weight:300;line-height:1.06;margin-bottom:1.2rem}
+.s-body{font-size:.92rem;font-weight:300;color:var(--dim);line-height:1.8}
+
+#benefits{background:var(--bg-mid)}
+.benefit-list{display:flex;flex-direction:column;gap:1px;margin-top:1.4rem}
+.benefit{display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;align-items:start;background:var(--bg);padding:1.3rem 1rem}
+.benefit-num{font-family:var(--serif);font-size:1.6rem;font-weight:300;color:rgba(var(--accent-r),.3);line-height:1}
+.benefit-title{font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--cream);margin-bottom:.35rem}
+.benefit-copy{font-size:.85rem;font-weight:300;color:var(--dim);line-height:1.72}
+
+#taste{background:var(--bg)}
+.taste-list{margin-top:1.6rem;display:flex;flex-direction:column}
+.taste-item{padding:1.4rem 0;border-top:1px solid rgba(var(--accent-r),.1)}
+.taste-item:last-child{border-bottom:1px solid rgba(var(--accent-r),.1)}
+.taste-note{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.taste-headline{font-family:var(--serif);font-size:1.25rem;font-weight:300;color:var(--cream);margin-bottom:.5rem;font-style:italic}
+.taste-desc{font-size:.85rem;font-weight:300;color:var(--dim);line-height:1.72}
+
+#origin{background:var(--bg-mid)}
+.origin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:1.4rem;margin-bottom:1.8rem}
+.origin-cell{background:var(--bg);padding:1.1rem}
+.origin-cell-label{font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-bottom:.3rem}
+.origin-cell-val{font-size:.88rem;color:var(--cream);font-weight:300}
+.origin-quote{font-family:var(--serif);font-size:1.1rem;font-style:italic;font-weight:300;color:var(--dim);line-height:1.78;border-left:2px solid var(--accent);padding-left:1.1rem}
+
+#proof{background:var(--bg)}
+.proof-list{display:flex;flex-direction:column;gap:1.2rem;margin-top:1.4rem}
+.proof-card{background:var(--bg-mid);border:1px solid rgba(var(--accent-r),.09);padding:1.4rem 1.2rem}
+.proof-stars{color:oklch(68% 0.14 70);font-size:.72rem;letter-spacing:.12em;margin-bottom:.7rem}
+.proof-text{font-family:var(--serif);font-size:.98rem;font-style:italic;font-weight:300;line-height:1.7;color:var(--cream);margin-bottom:.75rem}
+.proof-author{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)}
+.proof-badge{display:inline-block;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(var(--accent-r),.22);color:var(--accent);padding:.15rem .5rem;margin-top:.4rem}
+
+#close{background:var(--bg-mid);text-align:center}
+.close-guarantee{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
+.close-title{font-family:var(--serif);font-size:clamp(1.9rem,6.5vw,2.8rem);font-weight:300;line-height:1.1;margin-bottom:1.1rem}
+.close-body{font-size:.9rem;font-weight:300;color:var(--dim);line-height:1.78;max-width:420px;margin:0 auto 1.8rem}
+.close-perks{display:flex;flex-direction:column;gap:.5rem;margin-top:1.2rem}
+.close-perk{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;justify-content:center;gap:.45rem}
+.close-perk::before{content:'▸';color:var(--accent)}
+
+.sticky{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(5,2,1,.97);backdrop-filter:blur(16px);border-top:1px solid rgba(var(--accent-r),.2);padding:.8rem 1.4rem;display:flex;align-items:center;gap:.8rem;justify-content:space-between;transform:translateY(100%);transition:transform .35s ease}
+.sticky.visible{transform:translateY(0)}
+.sticky-info{flex:1;min-width:0}
+.sticky-name{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.sticky-price{font-family:var(--serif);font-size:1.3rem;color:var(--accent);line-height:1.1}
+.btn-sticky{background:var(--accent);color:#fff;border:none;padding:.8rem 1.5rem;font-family:var(--sans);font-size:.72rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .25s;white-space:nowrap;min-height:46px;flex-shrink:0}
+.btn-sticky:hover{background:oklch(68% 0.14 70);color:var(--bg)}
+
+.rule{height:1px;background:linear-gradient(to right,transparent,rgba(var(--accent-r),.15),transparent);margin:0}
+
+/* Bestseller badge */
+.bestseller-band{background:var(--accent);color:#fff;text-align:center;padding:.5rem 1rem;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500}
+
+@media(min-width:680px){
+  .s{padding:4rem 2rem;max-width:600px}
+  .hero-body{padding:0 3rem 5.5rem;max-width:580px}
+  .btn-hero{max-width:300px}
+  .origin-grid{grid-template-columns:repeat(4,1fr)}
+  .trust-bar{gap:3rem}
+}
+@media(min-width:960px){
+  .s{max-width:660px}
+  .hero-body{max-width:660px;padding:0 5rem 6rem}
+  .hero-h1{font-size:clamp(4rem,5.5vw,6rem)}
+}
+</style>
+</head>
+<body>
+
+<div class="bestseller-band">Our Best-Selling Roast — Sells Out Most Weeks</div>
+
+<nav class="lp-nav" id="lp-nav">
+  <a href="index.html" class="lp-logo">STONEHAWKER <span>COFFEE</span></a>
+  <a href="index.html" class="lp-back">← All Roasts</a>
+</nav>
+
+<section id="hero">
+  <div class="hero-vid">
+    <video autoplay muted loop playsinline preload="metadata" poster="assets/images/hero-poster.jpg">
+      <source src="assets/video/hero-loop.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-scrim"></div>
+  <div class="hero-tint"></div>
+  <div class="hero-body">
+    <p class="hero-eye">Lake Atitlán · 5,280ft · Medium Roast</p>
+    <h1 class="hero-h1">The Last Coffee<br>You'll Ever<br><em>Need to Try.</em></h1>
+    <p class="hero-sub">Our best-seller. Dark cherry, baker's chocolate, volcanic body. So balanced it's almost unfair.</p>
+    <p class="hero-price">From $26 &nbsp;·&nbsp; 32 cups &nbsp;·&nbsp; Most popular roast</p>
+    <button class="btn-hero" onclick="addToCart()">Shop Quetzal — From $26</button>
+    <p class="hero-trust">✓ Roasted to order &nbsp;·&nbsp; Ships in 48h &nbsp;·&nbsp; Free returns</p>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <span class="trust-pill">Single Origin</span>
+  <span class="trust-pill">Naturally Organic</span>
+  <span class="trust-pill">Fair Trade Direct</span>
+  <span class="trust-pill">Roasted to Order</span>
+  <span class="trust-pill">30-Day Guarantee</span>
+</div>
+
+<div class="rule"></div>
+
+<section id="benefits">
+  <div class="s">
+    <p class="s-label">Why Quetzal Wins</p>
+    <h2 class="s-title">The medium roast that<br>made everyone switch.</h2>
+    <div class="benefit-list">
+      <div class="benefit">
+        <span class="benefit-num">01</span>
+        <div>
+          <div class="benefit-title">Full body. Zero compromise.</div>
+          <p class="benefit-copy">Naturally processed on raised drying beds, Quetzal carries the full sweetness of the coffee cherry directly into the cup. No additives. No flavor enhancement. The richness is built into the bean itself.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <span class="benefit-num">02</span>
+        <div>
+          <div class="benefit-title">The gateway roast. For good reason.</div>
+          <p class="benefit-copy">Not too bright. Not too heavy. Quetzal is the roast that converts light roast holdouts and dark roast loyalists in the same week. Our highest re-order rate of any product — by a significant margin.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <span class="benefit-num">03</span>
+        <div>
+          <div class="benefit-title">Tastes like it was roasted yesterday.</div>
+          <p class="benefit-copy">Because it was. We roast to order. Your bag ships within 48 hours of the roast date. No warehouse. No sitting on a shelf. The peak flavor window is a narrow one — we make sure you're inside it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section id="taste">
+  <div class="s">
+    <p class="s-label">What You Taste → What You Feel</p>
+    <h2 class="s-title">Flavor notes that<br>translate into <em>mornings.</em></h2>
+    <div class="taste-list">
+      <div class="taste-item">
+        <p class="taste-note">Dark Cherry</p>
+        <p class="taste-headline">"Sweetness before the caffeine even lands."</p>
+        <p class="taste-desc">Your brain registers indulgent before it registers coffee. The natural fruit sweetness from the cherry fermentation process arrives on the front palate before anything else. It's the reason people reach for a second cup before they finish the first.</p>
+      </div>
+      <div class="taste-item">
+        <p class="taste-note">Baker's Chocolate</p>
+        <p class="taste-headline">"Comfort without compromise."</p>
+        <p class="taste-desc">A deep, unsweetened cocoa richness that fills the cup without heaviness. This is what natural processing on volcanic soil produces — a body that mimics the feeling of something decadent, using only what the land provides.</p>
+      </div>
+      <div class="taste-item">
+        <p class="taste-note">Brown Sugar</p>
+        <p class="taste-headline">"The sweetness that makes you check the label."</p>
+        <p class="taste-desc">No sugar. No flavoring. People consistently check the bag because it tastes like something was added. Nothing was. That's what ten-thousand-year-old basalt soil does when you grow coffee properly on top of it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section id="origin">
+  <div class="s">
+    <p class="s-label">The Origin</p>
+    <h2 class="s-title">Named for Guatemala's<br>sacred bird.</h2>
+    <div class="origin-grid">
+      <div class="origin-cell"><div class="origin-cell-label">Altitude</div><div class="origin-cell-val">5,280 ft</div></div>
+      <div class="origin-cell"><div class="origin-cell-label">Region</div><div class="origin-cell-val">Sololá, GT</div></div>
+      <div class="origin-cell"><div class="origin-cell-label">Process</div><div class="origin-cell-val">Natural</div></div>
+      <div class="origin-cell"><div class="origin-cell-label">Harvest</div><div class="origin-cell-val">Nov – Feb</div></div>
+    </div>
+    <p class="origin-quote">Medium roasts are where most brands cut corners — they hit the middle and go home. Ours is naturally processed, meaning the coffee cherry ferments directly on the bean before drying. The sugars transfer. The complexity deepens. That's why Quetzal is sweet without additives and rich without being heavy. Your morning just changed.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section id="proof">
+  <div class="s">
+    <p class="s-label">What Real Customers Say</p>
+    <h2 class="s-title">They didn't ask us.<br>We didn't have to.</h2>
+    <div class="proof-list">
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-text">"I've tried every major subscription brand on the market. Quetzal is the only coffee I've ever re-ordered before I ran out of the previous bag. That has never happened in 10 years."</p>
+        <p class="proof-author">James P. — Austin, TX</p>
+        <span class="proof-badge">Verified Purchase</span>
+      </div>
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-text">"Converted my entire office. We do a group order now. My boss — who only drinks Nespresso — asked me to add him to the order. That tells you everything."</p>
+        <p class="proof-author">Dana K. — Chicago, IL</p>
+        <span class="proof-badge">Verified Purchase</span>
+      </div>
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-text">"My husband calls this 'the coffee that ended our arguments about coffee.' We used to buy two different brands. Now we both drink Quetzal. Problem solved."</p>
+        <p class="proof-author">Priya N. — Denver, CO</p>
+        <span class="proof-badge">Verified Purchase</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section id="close">
+  <div class="s" style="text-align:center">
+    <p class="close-guarantee">The Stonehawker Guarantee</p>
+    <h2 class="close-title">Not the best medium roast<br>you've ever had?<br><em>Full refund. Keep the bag.</em></h2>
+    <p class="close-body">Our most re-ordered roast. If Quetzal isn't the best medium roast you've tasted, we'll refund every penny — and you don't need to send the bag back. No forms. No questions. No catch.</p>
+    <button class="btn-hero" style="margin:0 auto" onclick="addToCart()">Shop Quetzal — From $26</button>
+    <div class="close-perks">
+      <span class="close-perk">Naturally processed — flavors you can't fake</span>
+      <span class="close-perk">Ships within 48 hours of roast date</span>
+      <span class="close-perk">Free shipping on orders $40 and over</span>
+      <span class="close-perk">Full refund guarantee — no return required</span>
+    </div>
+  </div>
+</section>
+
+<div class="sticky" id="sticky">
+  <div class="sticky-info">
+    <div class="sticky-name">Quetzal · Medium Roast</div>
+    <div class="sticky-price">From $26</div>
+  </div>
+  <button class="btn-sticky" onclick="addToCart()">Add to Cart</button>
+</div>
+
+<script>
+(function(){
+  var nav = document.getElementById('lp-nav');
+  var sticky = document.getElementById('sticky');
+  var hero = document.getElementById('hero');
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY;
+    nav.classList.toggle('solid', y > 60);
+    var heroBot = hero.offsetTop + hero.offsetHeight - 120;
+    sticky.classList.toggle('visible', y > heroBot);
+  }, {passive:true});
+  var vid = document.querySelector('video');
+  if(vid){ vid.muted=true; var p=vid.play(); if(p) p.catch(function(){vid.setAttribute('controls','');}); }
+})();
+function addToCart(){
+  window.location.href='atitlan.html';
+}
+</script>
+</body>
+</html>
