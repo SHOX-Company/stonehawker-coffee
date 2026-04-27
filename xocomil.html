@@ -4,175 +4,89 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Xocomil Dark Roast — Stonehawker Coffee</title>
-<meta name="description" content="Not for everyone. Dark chocolate, smoked cedar, 10,000 years of volcanic depth. The dark roast that doesn't hide behind char. From $26 — roasted to order.">
+<meta name="description" content="Dark chocolate, smoked cedar, 10,000 years of volcanic depth. The dark roast that doesn't hide behind char. Bold, complex, unapologetic. From $26. Roasted to order.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/lp.css">
 <style>
-:root {
-  --bg:       oklch(7% 0.022 35);
-  --bg-mid:   oklch(12% 0.028 35);
-  --cream:    oklch(93% 0.014 80);
-  --dim:      oklch(72% 0.013 78);
-  --ash:      oklch(32% 0.03 80);
-  --accent:   #B0A090;
-  --accent-r: 176, 160, 144;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans:  'DM Sans', system-ui, sans-serif;
+:root{
+  --accent:        #B8AA9C;
+  --accent-r:      184, 170, 156;
+  --bg-cta-text:   #0A0604;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--cream);font-family:var(--sans);overflow-x:hidden}
-
-.lp-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.4rem;background:linear-gradient(to bottom,rgba(5,2,1,.9),transparent);transition:background .4s}
-.lp-nav.solid{background:rgba(5,2,1,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(var(--accent-r),.15)}
-.lp-logo{font-family:var(--serif);font-size:1.05rem;font-weight:600;letter-spacing:.1em;color:var(--cream);text-decoration:none}
-.lp-logo span{color:oklch(68% 0.14 70)}
-.lp-back{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s}
-.lp-back:hover{color:var(--accent)}
-
-#hero{position:relative;height:100svh;min-height:600px;overflow:hidden;background:var(--bg);display:flex;align-items:flex-end}
-.hero-vid{position:absolute;inset:0;z-index:0}
-.hero-vid video{width:100%;height:100%;object-fit:cover;object-position:55% center;display:block;filter:saturate(.88) brightness(.92)}
-.hero-scrim{position:absolute;inset:0;z-index:1;background:
-  linear-gradient(to right, rgba(3,1,1,.96) 0%, rgba(3,1,1,.8) 38%, rgba(3,1,1,.3) 68%, transparent 100%),
-  linear-gradient(to top,   rgba(3,1,1,.99) 0%, rgba(3,1,1,.85) 22%, rgba(3,1,1,.44) 44%, rgba(3,1,1,.1) 64%, transparent 84%)}
-.hero-body{position:relative;z-index:2;width:100%;max-width:86vw;padding:0 1.5rem 5rem}
-.hero-eye{font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
-.hero-h1{font-family:var(--serif);font-size:clamp(3.4rem,12.5vw,6.2rem);font-weight:300;line-height:.9;letter-spacing:-.015em;margin-bottom:1rem;text-shadow:0 2px 28px rgba(0,0,0,.65)}
-.hero-sub{font-size:.92rem;font-weight:300;color:rgba(237,225,208,.72);max-width:320px;line-height:1.68;margin-bottom:1.5rem;text-shadow:0 1px 12px rgba(0,0,0,.8)}
-.hero-price{font-size:.72rem;letter-spacing:.12em;color:rgba(var(--accent-r),.85);margin-bottom:1.1rem}
-.btn-hero{display:block;width:100%;max-width:340px;background:var(--accent);color:var(--bg);border:none;padding:1.05rem 1.6rem;font-family:var(--sans);font-size:.82rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .3s;min-height:54px}
-.btn-hero:hover{background:var(--cream);transform:translateY(-2px);box-shadow:0 14px 36px rgba(var(--accent-r),.35)}
-.hero-trust{margin-top:.85rem;font-size:.6rem;letter-spacing:.1em;color:rgba(200,176,140,.45);text-transform:uppercase}
-
-.trust-bar{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;padding:1.1rem 1.4rem;background:var(--bg-mid);border-bottom:1px solid rgba(var(--accent-r),.1)}
-.trust-pill{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:.35rem}
-.trust-pill::before{content:'✓';color:oklch(68% 0.14 70);font-size:.7rem}
-
-.s{max-width:540px;margin:0 auto;padding:3.2rem 1.5rem}
-.s-label{font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
-.s-title{font-family:var(--serif);font-size:clamp(2rem,7vw,3.2rem);font-weight:300;line-height:1.06;margin-bottom:1.2rem}
-
-#benefits{background:var(--bg-mid)}
-.benefit-list{display:flex;flex-direction:column;gap:1px;margin-top:1.4rem}
-.benefit{display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;align-items:start;background:var(--bg);padding:1.3rem 1rem}
-.benefit-num{font-family:var(--serif);font-size:1.6rem;font-weight:300;color:rgba(var(--accent-r),.3);line-height:1}
-.benefit-title{font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--cream);margin-bottom:.35rem}
-.benefit-copy{font-size:.85rem;font-weight:300;color:var(--dim);line-height:1.72}
-
-#taste{background:var(--bg)}
-.taste-list{margin-top:1.6rem;display:flex;flex-direction:column}
-.taste-item{padding:1.4rem 0;border-top:1px solid rgba(var(--accent-r),.1)}
-.taste-item:last-child{border-bottom:1px solid rgba(var(--accent-r),.1)}
-.taste-note{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
-.taste-headline{font-family:var(--serif);font-size:1.25rem;font-weight:300;color:var(--cream);margin-bottom:.5rem;font-style:italic}
-.taste-desc{font-size:.85rem;font-weight:300;color:var(--dim);line-height:1.72}
-
-#origin{background:var(--bg-mid)}
-.origin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:1.4rem;margin-bottom:1.8rem}
-.origin-cell{background:var(--bg);padding:1.1rem}
-.origin-cell-label{font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-bottom:.3rem}
-.origin-cell-val{font-size:.88rem;color:var(--cream);font-weight:300}
-.origin-quote{font-family:var(--serif);font-size:1.1rem;font-style:italic;font-weight:300;color:var(--dim);line-height:1.78;border-left:2px solid var(--accent);padding-left:1.1rem}
-
-#proof{background:var(--bg)}
-.proof-list{display:flex;flex-direction:column;gap:1.2rem;margin-top:1.4rem}
-.proof-card{background:var(--bg-mid);border:1px solid rgba(var(--accent-r),.1);padding:1.4rem 1.2rem}
-.proof-stars{color:oklch(68% 0.14 70);font-size:.72rem;letter-spacing:.12em;margin-bottom:.7rem}
-.proof-text{font-family:var(--serif);font-size:.98rem;font-style:italic;font-weight:300;line-height:1.7;color:var(--cream);margin-bottom:.75rem}
-.proof-author{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)}
-.proof-badge{display:inline-block;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(var(--accent-r),.25);color:var(--accent);padding:.15rem .5rem;margin-top:.4rem}
-
-#close{background:var(--bg-mid);text-align:center}
-.close-guarantee{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
-.close-title{font-family:var(--serif);font-size:clamp(1.9rem,6.5vw,2.8rem);font-weight:300;line-height:1.1;margin-bottom:1.1rem}
-.close-body{font-size:.9rem;font-weight:300;color:var(--dim);line-height:1.78;max-width:420px;margin:0 auto 1.8rem}
-.close-perks{display:flex;flex-direction:column;gap:.5rem;margin-top:1.2rem}
-.close-perk{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;justify-content:center;gap:.45rem}
-.close-perk::before{content:'▸';color:var(--accent)}
-
-.sticky{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(3,1,1,.97);backdrop-filter:blur(16px);border-top:1px solid rgba(var(--accent-r),.2);padding:.8rem 1.4rem;display:flex;align-items:center;gap:.8rem;justify-content:space-between;transform:translateY(100%);transition:transform .35s ease}
-.sticky.visible{transform:translateY(0)}
-.sticky-info{flex:1;min-width:0}
-.sticky-name{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
-.sticky-price{font-family:var(--serif);font-size:1.3rem;color:var(--accent);line-height:1.1}
-.btn-sticky{background:var(--accent);color:var(--bg);border:none;padding:.8rem 1.5rem;font-family:var(--sans);font-size:.72rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .25s;white-space:nowrap;min-height:46px;flex-shrink:0}
-.btn-sticky:hover{background:var(--cream)}
-
-.rule{height:1px;background:linear-gradient(to right,transparent,rgba(var(--accent-r),.18),transparent);margin:0}
-
-@media(min-width:680px){
-  .s{padding:4rem 2rem;max-width:600px}
-  .hero-body{padding:0 3rem 5.5rem;max-width:580px}
-  .btn-hero{max-width:300px}
-  .origin-grid{grid-template-columns:repeat(4,1fr)}
-  .trust-bar{gap:3rem}
+/* Dark roast gets deeper, moodier scrim */
+.hero-scrim{
+  background:
+    linear-gradient(to right, rgba(3,1,1,.96) 0%, rgba(3,1,1,.7) 45%, rgba(3,1,1,.22) 72%, transparent 100%),
+    linear-gradient(to top,   rgba(3,1,1,.99) 0%, rgba(3,1,1,.88) 20%, rgba(3,1,1,.52) 40%, rgba(3,1,1,.12) 60%, transparent 82%) !important;
 }
-@media(min-width:960px){
-  .s{max-width:660px}
-  .hero-body{max-width:660px;padding:0 5rem 6rem}
-  .hero-h1{font-size:clamp(4.5rem,5.8vw,6.5rem)}
-}
+#hero-vid{ filter:saturate(.85) brightness(.9) }
 </style>
 </head>
 <body>
 
-<nav class="lp-nav" id="lp-nav">
-  <a href="index.html" class="lp-logo">STONEHAWKER <span>COFFEE</span></a>
-  <a href="index.html" class="lp-back">← All Roasts</a>
+<nav class="lp-nav" id="nav">
+  <a href="index.html" class="nav-logo">STONEHAWKER <span>COFFEE</span></a>
+  <a href="index.html" class="nav-back">← All Roasts</a>
 </nav>
 
+<!-- ── HERO ── -->
 <section id="hero">
   <div class="hero-vid">
-    <video autoplay muted loop playsinline preload="metadata" poster="assets/images/hero-poster.jpg">
+    <video autoplay muted loop playsinline preload="metadata" poster="assets/images/hero-poster.jpg" id="hero-vid">
       <source src="assets/video/hero-loop.mp4" type="video/mp4">
     </video>
   </div>
   <div class="hero-scrim"></div>
-  <div class="hero-body">
-    <p class="hero-eye">Lake Atitlán · 5,280ft · Dark Roast</p>
-    <h1 class="hero-h1">Not<br>For<br><em>Everyone.</em></h1>
-    <p class="hero-sub">If you need your coffee to actually mean something. Dark chocolate. Smoked cedar. 10,000 years of volcanic depth.</p>
-    <p class="hero-price">From $26 &nbsp;·&nbsp; 32 cups &nbsp;·&nbsp; Small batch</p>
-    <button class="btn-hero" onclick="addToCart()">Shop Xocomil — From $26</button>
-    <p class="hero-trust">✓ Roasted to order &nbsp;·&nbsp; Ships in 48h &nbsp;·&nbsp; Free returns</p>
+  <div class="hero-content">
+    <span class="roast-id">Dark Roast</span>
+    <h1 class="hero-h1">
+      Born From<br>
+      <em>Ancient Ash.</em><br>
+      Volcanically Organic.
+    </h1>
+    <p class="hero-sub">Shade-grown in volcanic ash at 5,000ft above the sea. Hand-picked by Maya farmers. Nothing added. Nothing like anything you've tasted.</p>
+    <button class="btn-cta" onclick="scrollToOffer()">Get Xocomil — From $26</button>
+    <p class="hero-microcopy">✓ Roasted to order &nbsp;·&nbsp; Ships within 48h &nbsp;·&nbsp; Free returns</p>
   </div>
 </section>
 
-<div class="trust-bar">
-  <span class="trust-pill">Single Origin</span>
-  <span class="trust-pill">Naturally Organic</span>
-  <span class="trust-pill">Fair Trade Direct</span>
-  <span class="trust-pill">Roasted to Order</span>
-  <span class="trust-pill">30-Day Guarantee</span>
+<!-- ── TRUST STRIP ── -->
+<div class="trust-strip">
+  <span class="t-chip">Single Origin</span>
+  <span class="t-chip">Naturally Organic</span>
+  <span class="t-chip">Fair Trade Direct</span>
+  <span class="t-chip">Roasted to Order</span>
+  <span class="t-chip">30-Day Guarantee</span>
 </div>
 
 <div class="rule"></div>
 
+<!-- ── BENEFITS ── -->
 <section id="benefits">
-  <div class="s">
-    <p class="s-label">Why Xocomil Is Different</p>
-    <h2 class="s-title">Bold because the beans<br>deserve it. Not because<br>we burned them.</h2>
-    <div class="benefit-list">
+  <div class="lp-sec">
+    <p class="sec-label">Why Xocomil Is Different</p>
+    <h2 class="sec-h2">Dark because the beans<br>deserve it. Not because<br><em>we burned them.</em></h2>
+    <div class="benefits-list">
       <div class="benefit">
-        <span class="benefit-num">01</span>
+        <span class="b-num">01</span>
         <div>
-          <div class="benefit-title">Bold without the burn.</div>
-          <p class="benefit-copy">Most dark roasts mask defective, low-grade beans with char and roast flavor. We do the opposite. Xocomil is fully developed because the beans are extraordinary — not because we destroyed them. Zero char. Zero bitterness. Just depth.</p>
+          <p class="b-title">Dark. Not destroyed.</p>
+          <p class="b-copy">Most dark roasts hide low-grade beans behind char. Ours is fully developed because the beans are extraordinary — not because we masked a problem. Zero char. Zero bitterness. Just depth.</p>
         </div>
       </div>
       <div class="benefit">
-        <span class="benefit-num">02</span>
+        <span class="b-num">02</span>
         <div>
-          <div class="benefit-title">The volcanic mineral that stays.</div>
-          <p class="benefit-copy">Most dark roasts flatten the origin into obscurity. Our volcanic mineral backbone is strong enough to hold at full development. The basalt profile that took 10,000 years to build doesn't disappear at dark roast temperatures. It deepens.</p>
+          <p class="b-title">The volcanic mineral stays.</p>
+          <p class="b-copy">Full-development roasting flattens most origins into nothing. Xocomil's basalt mineral backbone deepens rather than disappears — the depth is built from 10,000 years of volcanic soil, not the roaster's drum.</p>
         </div>
       </div>
       <div class="benefit">
-        <span class="benefit-num">03</span>
+        <span class="b-num">03</span>
         <div>
-          <div class="benefit-title">The shot that makes the café obsolete.</div>
-          <p class="benefit-copy">Pulls an espresso that stops conversations. Brewed as drip, it's a cup you don't put down. Xocomil has the structure to perform in any brew method — and the personality to make each one worth writing home about.</p>
+          <p class="b-title">Every brew method. One outcome.</p>
+          <p class="b-copy">Espresso that stops conversations. French press that fills the room. Drip that owns the morning. Xocomil performs at the highest level in every format — the intensity adapts, it doesn't drop.</p>
         </div>
       </div>
     </div>
@@ -181,25 +95,50 @@ body{background:var(--bg);color:var(--cream);font-family:var(--sans);overflow-x:
 
 <div class="rule"></div>
 
+<!-- ── REVIEWS ── -->
+<section id="reviews">
+  <div class="lp-sec">
+    <p class="sec-label">What Customers Say</p>
+    <h2 class="sec-h2">From 20-year<br><em>dark roast drinkers.</em></h2>
+    <div class="reviews-grid">
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"First dark roast with actual depth underneath it. I've been drinking dark roast for 20 years. This is different."</p>
+        <p class="rev-author">Thomas H. — Nashville, TN</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"Made espresso that stopped a conversation in my living room. Six bags gifted since. It converts people."</p>
+        <p class="rev-author">Angela W. — Miami, FL</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"My husband said 'this coffee tastes serious.' He is not a man who compliments food. He's on his fourth bag."</p>
+        <p class="rev-author">Christine B. — Phoenix, AZ</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ── TASTE ── -->
 <section id="taste">
-  <div class="s">
-    <p class="s-label">What You Taste → What You Feel</p>
-    <h2 class="s-title">These aren't notes.<br>They're <em>declarations.</em></h2>
+  <div class="lp-sec">
+    <p class="sec-label">What You Taste</p>
+    <h2 class="sec-h2">These aren't<br>notes. They're<br><em>declarations.</em></h2>
     <div class="taste-list">
       <div class="taste-item">
-        <p class="taste-note">Dark Chocolate</p>
-        <p class="taste-headline">"Rich in a way that feels earned."</p>
-        <p class="taste-desc">Not sweet. Not bitter. The unsweetened cocoa depth that arrives when extraordinary beans meet full roast development. This is what chocolate tastes like when it comes from the earth — not from a flavor lab.</p>
+        <p class="t-note">Dark Chocolate</p>
+        <p class="t-line">"Deep in a way that feels absolute — not heavy, not sweet. Just present."</p>
       </div>
       <div class="taste-item">
-        <p class="taste-note">Smoked Cedar</p>
-        <p class="taste-headline">"You smell it before you taste it."</p>
-        <p class="taste-desc">A base note that anchors everything in the cup. Most coffee drinkers have never experienced this before — a woody depth that comes from the varietal and the altitude working together. It's the reason Xocomil drinkers don't go back to their old roast.</p>
+        <p class="t-note">Smoked Cedar</p>
+        <p class="t-line">"A base note you smell before you taste. It stays."</p>
       </div>
       <div class="taste-item">
-        <p class="taste-note">Dark Molasses</p>
-        <p class="taste-headline">"Earthiness that tells you this coffee is from somewhere real."</p>
-        <p class="taste-desc">The volcanic terroir of Lake Atitlán expresses itself at dark roast as something ancient and mineral. An earthiness that isn't dirt — it's depth. The kind that makes first-time drinkers pause and ask what they're drinking.</p>
+        <p class="t-note">Dark Molasses</p>
+        <p class="t-line">"Ancient earth expressing itself in the finish. You can't fake that."</p>
       </div>
     </div>
   </div>
@@ -207,90 +146,95 @@ body{background:var(--bg);color:var(--cream);font-family:var(--sans);overflow-x:
 
 <div class="rule"></div>
 
+<!-- ── ORIGIN ── -->
 <section id="origin">
-  <div class="s">
-    <p class="s-label">The Origin</p>
-    <h2 class="s-title">Named for the storm that<br>owns the lake.</h2>
-    <div class="origin-grid">
-      <div class="origin-cell"><div class="origin-cell-label">Altitude</div><div class="origin-cell-val">5,280 ft</div></div>
-      <div class="origin-cell"><div class="origin-cell-label">Region</div><div class="origin-cell-val">Sololá, GT</div></div>
-      <div class="origin-cell"><div class="origin-cell-label">Process</div><div class="origin-cell-val">Natural</div></div>
-      <div class="origin-cell"><div class="origin-cell-label">Varietal</div><div class="origin-cell-val">Catuai, Bourbon</div></div>
+  <div class="lp-sec">
+    <p class="sec-label">The Origin</p>
+    <h2 class="sec-h2">Named for the storm<br>that owns the lake.</h2>
+    <div class="origin-stats">
+      <div class="o-cell"><p class="o-label">Altitude</p><p class="o-val">5,280 ft</p></div>
+      <div class="o-cell"><p class="o-label">Region</p><p class="o-val">Sololá, GT</p></div>
+      <div class="o-cell"><p class="o-label">Process</p><p class="o-val">Natural</p></div>
+      <div class="o-cell"><p class="o-label">Varietal</p><p class="o-val">Catuai, Bourbon</p></div>
     </div>
-    <p class="origin-quote">Xocomil is named for the afternoon winds that tear across Lake Atitlán without warning — a force the Maya people have lived with for generations. Our dark roast has the same quality: commanding, direct, impossible to ignore. The volcanic mineral profile that took millennia to build doesn't surrender at dark roast development. It commands it.</p>
+    <p class="origin-body">Xocomil is named for the afternoon winds that tear across Lake Atitlán without warning — commanding, direct, impossible to ignore. Our dark roast has the same quality. At full development, the volcanic mineral profile that took millennia to build doesn't surrender. It commands the cup.</p>
   </div>
 </section>
 
 <div class="rule"></div>
 
-<section id="proof">
-  <div class="s">
-    <p class="s-label">What Real Customers Say</p>
-    <h2 class="s-title">From 20-year dark roast<br>drinkers.</h2>
-    <div class="proof-list">
-      <div class="proof-card">
-        <div class="proof-stars">★★★★★</div>
-        <p class="proof-text">"I've been drinking dark roast every morning for 20 years. This is the first one that has actual complexity underneath the darkness. I didn't know that was possible."</p>
-        <p class="proof-author">Thomas H. — Nashville, TN</p>
-        <span class="proof-badge">Verified Purchase</span>
+<!-- ── OFFER / CTA ── -->
+<section id="offer">
+  <div class="lp-sec">
+    <p class="sec-label">Choose Your Order</p>
+    <h2 class="sec-h2">Get Xocomil.<br>From <em>$26.</em></h2>
+    <div class="offer-opts" id="offer-opts">
+      <div class="offer-opt active" data-price="26" data-label="1 Bag" data-desc="16 oz · 32 cups">
+        <p class="opt-qty">1 Bag</p>
+        <p class="opt-price">$26</p>
+        <p class="opt-save">&nbsp;</p>
       </div>
-      <div class="proof-card">
-        <div class="proof-stars">★★★★★</div>
-        <p class="proof-text">"Made espresso that stopped a conversation in my living room. My friends have been asking about it ever since. I've sent 6 bags as gifts in the last 3 months."</p>
-        <p class="proof-author">Angela W. — Miami, FL</p>
-        <span class="proof-badge">Verified Purchase</span>
+      <div class="offer-opt" data-price="48" data-label="2 Bags" data-desc="2 × 16 oz">
+        <p class="opt-qty">2 Bags</p>
+        <p class="opt-price">$48</p>
+        <p class="opt-save">Save $4</p>
       </div>
-      <div class="proof-card">
-        <div class="proof-stars">★★★★★</div>
-        <p class="proof-text">"My husband said 'this coffee tastes serious' when he tried it. He's not a man who compliments food. He's now on his fourth bag."</p>
-        <p class="proof-author">Christine B. — Phoenix, AZ</p>
-        <span class="proof-badge">Verified Purchase</span>
+      <div class="offer-opt" data-price="67" data-label="3 Bags" data-desc="3 × 16 oz">
+        <span class="opt-badge">Best Value</span>
+        <p class="opt-qty">3 Bags</p>
+        <p class="opt-price">$67</p>
+        <p class="opt-save">Save $11</p>
       </div>
     </div>
+    <button class="offer-btn" id="offer-btn" onclick="checkout()">Get Xocomil — $26</button>
+    <p class="offer-guarantee"><strong>Not for the safe choice.</strong> If Xocomil doesn't change what you think dark roast can be, we roast you something else — no return, no questions. Keep the bag.</p>
   </div>
 </section>
 
-<div class="rule"></div>
-
-<section id="close">
-  <div class="s" style="text-align:center">
-    <p class="close-guarantee">The Stonehawker Guarantee</p>
-    <h2 class="close-title">Not the best dark roast<br>you've ever had?<br><em>We roast you another. On us.</em></h2>
-    <p class="close-body">This roast isn't for people who want a safe choice. It's for people who want the best. If Xocomil doesn't change what you think dark roast can be, we'll send you a different roast at no charge. No forms. No returns. No catch.</p>
-    <button class="btn-hero" style="margin:0 auto" onclick="addToCart()">Shop Xocomil — From $26</button>
-    <div class="close-perks">
-      <span class="close-perk">Natural process — bold by origin, not by burning</span>
-      <span class="close-perk">Ships within 48 hours of roast date</span>
-      <span class="close-perk">Free shipping on orders $40 and over</span>
-      <span class="close-perk">Full satisfaction guarantee — no return required</span>
-    </div>
-  </div>
-</section>
-
-<div class="sticky" id="sticky">
+<!-- ── STICKY BAR ── -->
+<div class="sticky-bar" id="sticky">
   <div class="sticky-info">
-    <div class="sticky-name">Xocomil · Dark Roast</div>
-    <div class="sticky-price">From $26</div>
+    <p class="sticky-name">Xocomil · Dark Roast</p>
+    <p class="sticky-price" id="sticky-price">$26</p>
   </div>
-  <button class="btn-sticky" onclick="addToCart()">Add to Cart</button>
+  <button class="sticky-btn" onclick="checkout()">Add to Cart</button>
 </div>
 
 <script>
 (function(){
-  var nav = document.getElementById('lp-nav');
-  var sticky = document.getElementById('sticky');
-  var hero = document.getElementById('hero');
+  var nav     = document.getElementById('nav');
+  var sticky  = document.getElementById('sticky');
+  var hero    = document.getElementById('hero');
+  var offerEl = document.getElementById('offer');
+  var vid     = document.getElementById('hero-vid');
+
+  if(vid){ vid.muted=true; var p=vid.play(); if(p) p.catch(function(){vid.removeAttribute('autoplay');}); }
+
   window.addEventListener('scroll', function(){
     var y = window.scrollY;
-    nav.classList.toggle('solid', y > 60);
-    var heroBot = hero.offsetTop + hero.offsetHeight - 120;
-    sticky.classList.toggle('visible', y > heroBot);
-  }, {passive:true});
-  var vid = document.querySelector('video');
-  if(vid){ vid.muted=true; var p=vid.play(); if(p) p.catch(function(){vid.setAttribute('controls','');}); }
+    nav.classList.toggle('scrolled', y > 50);
+    var showAt = hero.offsetHeight - 100;
+    var hideAt = offerEl.offsetTop + offerEl.offsetHeight + 60;
+    sticky.classList.toggle('show', y > showAt && y < hideAt);
+  },{passive:true});
+
+  var opts = document.querySelectorAll('.offer-opt');
+  var btn  = document.getElementById('offer-btn');
+  var sp   = document.getElementById('sticky-price');
+  opts.forEach(function(o){
+    o.addEventListener('click', function(){
+      opts.forEach(function(x){ x.classList.remove('active'); });
+      o.classList.add('active');
+      var price = '$' + o.dataset.price;
+      btn.textContent = 'Get Xocomil — ' + price;
+      sp.textContent  = price;
+    });
+  });
 })();
-function addToCart(){
-  window.location.href='darkroast.html';
+
+function scrollToOffer(){ document.getElementById('offer').scrollIntoView({behavior:'smooth'}); }
+function checkout(){
+  alert('Shopify integration coming soon.\nEmail orders@stonehawkercoffee.com to place an order.');
 }
 </script>
 </body>
